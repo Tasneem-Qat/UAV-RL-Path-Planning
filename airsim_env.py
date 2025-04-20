@@ -166,11 +166,11 @@ class AirSimMultiAgentEnv:
         dist = np.linalg.norm(pos - goal)
         prev_dist = self.last_distance.get(name, dist)
         reward = self.eta * (prev_dist - dist)
-        if dist < 1.0:
+        if dist <= 0.5:
             reward += self.R_GOAL
         self.last_distance[name] = dist
 
-        # Forward velocity bonus
+        # Straight line to goal velocity bonus
         dir_vec = (goal - pos) / (np.linalg.norm(goal - pos) + 1e-6)
         vel = np.array([
             state.kinematics_estimated.linear_velocity.x_val,

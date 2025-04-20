@@ -22,10 +22,10 @@ ACTION_DIM = 3
 #Training Settings:
 
 #Episodes of training (like epochs)
-MAX_EPISODES = 10000
+MAX_EPISODES = 2000
 
 #Max steps in each episode
-MAX_STEPS = 1000000
+MAX_STEPS = 200
 
 #Discount factor: determines how much the RL agent cares about distant future rewards relative to those in the immediate future        
 GAMMA = 0.95

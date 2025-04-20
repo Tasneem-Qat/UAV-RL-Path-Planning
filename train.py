@@ -42,7 +42,7 @@ def main():
             actions = []
             for i, agent in enumerate(agents):
                 # adding some noise for exploration
-                noise = max(0.5, (1 - ep / MAX_EPISODES*0.5))
+                noise = max(0.5, (1 - ep / MAX_EPISODES))
                 action = agent.act(obs[i], noise=noise)
                 actions.append(action)
             actions = np.array(actions)
@@ -79,13 +79,13 @@ def main():
             
 
         # Inside the training loop (train.py), after each episode:
-        if (ep + 1) % 3 == 0:
+        if (ep + 1) % 20 == 0:
         # Create the directory if it doesn't exist
             os.makedirs("weights", exist_ok=True)
             for i, agent in enumerate(agents):
                 torch.save(
                     agent.actor.state_dict(), 
-                    f"weights/agent{i}_actor_ep{ep}.pth"  # Save to weights/
+                    f"weights/agent{i}_actor_ep{ep+1}.pth"  # Save to weights/
                 )
             print("Saved model checkpoints!")    
 
