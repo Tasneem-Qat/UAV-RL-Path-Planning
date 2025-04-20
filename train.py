@@ -25,6 +25,10 @@ def main():
     #Creates replay buffer
     memory = ReplayBuffer()
 
+    episode_critic_loss = 0.0
+    episode_actor_loss = 0.0
+    num_updates = 0
+
     # Create a results directory
     os.makedirs("results", exist_ok=True)
     
@@ -73,11 +77,10 @@ def main():
                     b_obs, b_actions, b_rewards, b_next_obs, b_dones = memory.sample(BATCH_SIZE)
                     #Updates agent
                     critic_loss, actor_loss = agent.update(b_obs, b_actions, b_rewards, b_next_obs, b_dones, agents)
-                    with open("results/training_log.csv", "a", newline='') as f:
-                        writer = csv.writer(f)
-                        writer.writerow([ep, episode_reward[0], critic_loss, actor_loss])
+                    episode_critic_loss += critic_loss
+                    episode_actor_loss += actor_loss
+                    num_updates += 1
             
-
         # Inside the training loop (train.py), after each episode:
         if (ep + 1) % 20 == 0:
         # Create the directory if it doesn't exist
@@ -88,6 +91,10 @@ def main():
                     f"weights/agent{i}_actor_ep{ep+1}.pth"  # Save to weights/
                 )
             print("Saved model checkpoints!")    
+
+        avg_critic_loss = episode_critic_loss / num_updates if num_updates > 0 else 0.0
+        avg_actor_loss = episode_actor_loss / num_updates if num_updates > 0 else 0.0
+        writer.writerow([ep, episode_reward[0], avg_critic_loss, avg_actor_loss])
 
         print(f"Episode {ep} | Rewards: {episode_reward}")
 

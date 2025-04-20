@@ -33,7 +33,6 @@ class AirSimMultiAgentEnv:
         self.R_STEP = 0.0001         # per-step penalty
         self.R_TIMEOUT = 10.0     # penalty for exceeding max steps
         self.R_SMOOTH = 0.1      # smoothness reward
-        
         self.max_episode_steps = 200
         self.current_step = 0
         
@@ -162,10 +161,14 @@ class AirSimMultiAgentEnv:
         ])
         goal = self.goal_positions[name]
 
-        # 1) Goal progress reward
+        # 1) Goal progress reward and penalty
         dist = np.linalg.norm(pos - goal)
         prev_dist = self.last_distance.get(name, dist)
-        reward = self.eta * (prev_dist - dist)
+        if prev_dist > dist:
+            reward = self.eta * (prev_dist - dist)
+        elif prev_dist < dist:
+            reward = self.eta * (prev_dist - dist)
+            
         if dist <= 0.5:
             reward += self.R_GOAL
         self.last_distance[name] = dist
