@@ -100,7 +100,10 @@ class MADDPGAgent:
         #So we need the agent’s current policy action but other agents’ actions fixed
         current_actions = []
         for i, agent in enumerate(all_agents):
+            if i == self.agent_index:
                 current_actions.append(agent.actor(obs_t[:, i, :]))
+            else:
+                current_actions.append(actions_t[:, i, :])  # do not backprop through other agents
 
         current_actions = torch.cat(current_actions, dim=1)
         

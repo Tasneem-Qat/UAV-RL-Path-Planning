@@ -46,7 +46,7 @@ def main():
             actions = []
             for i, agent in enumerate(agents):
                 # adding some noise for exploration
-                noise = max(0.5, (1 - ep / MAX_EPISODES))
+                noise = max(0.1, (1 - ep / MAX_EPISODES/4))
                 action = agent.act(obs[i], noise=noise)
                 actions.append(action)
             actions = np.array(actions)
@@ -94,7 +94,9 @@ def main():
 
         avg_critic_loss = episode_critic_loss / num_updates if num_updates > 0 else 0.0
         avg_actor_loss = episode_actor_loss / num_updates if num_updates > 0 else 0.0
-        writer.writerow([ep, episode_reward[0], avg_critic_loss, avg_actor_loss])
+        with open("results/training_log.csv", "a", newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([ep, episode_reward[0], avg_critic_loss, avg_actor_loss])
 
         print(f"Episode {ep} | Rewards: {episode_reward}")
 

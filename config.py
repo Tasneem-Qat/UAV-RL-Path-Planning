@@ -37,7 +37,7 @@ TAU = 0.01
 ACTOR_LR =  0.0001
 
 #Learning rate for critic
-CRITIC_LR =  0.0003
+CRITIC_LR =  0.0002
 
 #Gradient clipping
 GRAD_CLIP = 1

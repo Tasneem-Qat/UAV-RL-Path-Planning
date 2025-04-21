@@ -26,12 +26,12 @@ class AirSimMultiAgentEnv:
         
         # Reward & termination parameters
         self.R_GOAL = 700.0       # bonus for reaching goal
-        self.eta = 0.7           # shaping factor for goal progress
-        self.R_COLLISION = 30.0   # collision penalty
+        self.eta = 1           # shaping factor for goal progress
+        self.R_COLLISION = 50.0   # collision penalty
         self.R_NEAR = 0.3         # near-miss penalty factor
         self.d_safe = 0.5        # safe distance for near-miss
         self.R_STEP = 0.0001         # per-step penalty
-        self.R_TIMEOUT = 10.0     # penalty for exceeding max steps
+        self.R_TIMEOUT = 30.0     # penalty for exceeding max steps
         self.R_SMOOTH = 0.1      # smoothness reward
         self.max_episode_steps = 200
         self.current_step = 0
@@ -107,6 +107,11 @@ class AirSimMultiAgentEnv:
             done, info = self._check_done()
             dones.append(done)
 
+            if dones[0]:
+                goal = self.goal_positions[name]
+                dist = np.linalg.norm(pos - goal)
+                print(f"Final distance to goal: {dist:.2f}m")
+        
             # Next observation (position + velocity)
             next_obs.append(np.array([
                 pos[0], pos[1], pos[2],
@@ -152,6 +157,7 @@ class AirSimMultiAgentEnv:
         return distances
 
     def _get_reward(self, agent_index, action):
+        reward = 0
         name = self.drone_names[agent_index]
         state = self.client.getMultirotorState(vehicle_name=name)
         pos = np.array([
@@ -164,10 +170,11 @@ class AirSimMultiAgentEnv:
         # 1) Goal progress reward and penalty
         dist = np.linalg.norm(pos - goal)
         prev_dist = self.last_distance.get(name, dist)
-        if prev_dist > dist:
-            reward = self.eta * (prev_dist - dist)
-        elif prev_dist < dist:
-            reward = self.eta * (prev_dist - dist)
+        reward = self.eta * (prev_dist - dist)
+        # if prev_dist > dist:
+        #     reward = self.eta * (prev_dist - dist)
+        # elif prev_dist < dist:
+        #     reward = self.eta * (prev_dist - dist)
             
         if dist <= 0.5:
             reward += self.R_GOAL
