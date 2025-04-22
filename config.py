@@ -22,10 +22,10 @@ ACTION_DIM = 3
 #Training Settings:
 
 #Episodes of training (like epochs)
-MAX_EPISODES = 2000
+MAX_EPISODES = 10000
 
 #Max steps in each episode
-MAX_STEPS = 200
+MAX_STEPS = 1000000
 
 #Discount factor: determines how much the RL agent cares about distant future rewards relative to those in the immediate future        
 GAMMA = 0.95
@@ -34,10 +34,10 @@ GAMMA = 0.95
 TAU = 0.01
 
 #Learning rate for actor
-ACTOR_LR =  0.0001
+ACTOR_LR =  0.00001
 
 #Learning rate for critic
-CRITIC_LR =  0.0002
+CRITIC_LR =  0.00001
 
 #Gradient clipping
 GRAD_CLIP = 1
@@ -49,10 +49,10 @@ BATCH_SIZE = 64
 UPDATE_FREQUENCY = 20
 
 #Buffer which stores experience in replay_buffer.py
-REPLAY_BUFFER_SIZE = int(2e5)
+REPLAY_BUFFER_SIZE = int(2e6)
 #_______________________________________________________________________________________
 
 #Neural Network Settings:
 
 #Hidden layer dimension for the nerual networks in networks.py
-HIDDEN_DIM = 256        
+HIDDEN_DIM = 128        

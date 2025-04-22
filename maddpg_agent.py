@@ -92,6 +92,12 @@ class MADDPGAgent:
         
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
+        
+        critic_grad_norms = []
+        for name, param in self.critic.named_parameters():
+            if param.grad is not None:
+                critic_grad_norms.append(param.grad.norm().item())
+        
         torch.nn.utils.clip_grad_norm_(self.critic.parameters(), GRAD_CLIP)
         self.critic_optimizer.step()
         
@@ -100,11 +106,7 @@ class MADDPGAgent:
         #So we need the agent’s current policy action but other agents’ actions fixed
         current_actions = []
         for i, agent in enumerate(all_agents):
-            if i == self.agent_index:
-                current_actions.append(agent.actor(obs_t[:, i, :]))
-            else:
-                current_actions.append(actions_t[:, i, :])  # do not backprop through other agents
-
+            current_actions.append(agent.actor(obs_t[:, i, :]))
         current_actions = torch.cat(current_actions, dim=1)
         
         actor_input = torch.cat((full_obs, current_actions), dim=1)
@@ -112,6 +114,12 @@ class MADDPGAgent:
         
         self.actor_optimizer.zero_grad()
         actor_loss.backward()
+        
+        actor_grad_norms = []
+        for name, param in self.actor.named_parameters():
+            if param.grad is not None:
+                actor_grad_norms.append(param.grad.norm().item())
+        
         torch.nn.utils.clip_grad_norm_(self.actor.parameters(), GRAD_CLIP*0.5)
         self.actor_optimizer.step()
         
@@ -129,7 +137,14 @@ class MADDPGAgent:
         self._soft_update(self.target_actor, self.actor, TAU)
         self._soft_update(self.target_critic, self.critic, TAU)
         
-        return critic_loss.item(), actor_loss.item()
+        avg_critic_grad = np.mean(critic_grad_norms) if critic_grad_norms else 0
+        max_critic_grad = np.max(critic_grad_norms) if critic_grad_norms else 0
+        avg_actor_grad = np.mean(actor_grad_norms) if actor_grad_norms else 0
+        max_actor_grad = np.max(actor_grad_norms) if actor_grad_norms else 0
+        
+        return critic_loss.item(), actor_loss.item(), \
+               avg_critic_grad, max_critic_grad, \
+               avg_actor_grad, max_actor_grad
 
     def _soft_update(self, target, source, tau):
         """
