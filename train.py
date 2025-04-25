@@ -25,22 +25,28 @@ def main():
     #Creates replay buffer
     memory = ReplayBuffer()
 
-    episode_critic_loss = 0.0
-    episode_actor_loss = 0.0
-    num_updates = 0
-    episode_avg_critic_grad = 0
-    episode_max_critic_grad = 0
-    episode_avg_actor_grad = 0
-    episode_max_actor_grad = 0
-     
+    episode_critic_loss = [0.0] * NUM_AGENTS
+    episode_actor_loss = [0.0] * NUM_AGENTS
+    episode_avg_critic_grad = [0.0] * NUM_AGENTS
+    episode_max_critic_grad = [0.0] * NUM_AGENTS
+    episode_avg_actor_grad = [0.0] * NUM_AGENTS
+    episode_max_actor_grad = [0.0] * NUM_AGENTS
+    num_updates_per_agent = [0] * NUM_AGENTS
+    episode_critic_gn = [0.0] * NUM_AGENTS
+    episode_actor_gn = [0.0] * NUM_AGENTS
+    avg_critic_gn = [0.0] * NUM_AGENTS
+    avg_actor_gn = [0.0] * NUM_AGENTS
+    
     # Create a results directory
     os.makedirs("results", exist_ok=True)
     
     with open("results/training_log.csv", "w", newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(["Episode", "Reward", "Critic Loss", "Actor Loss",
-                        "Avg Critic Grad", "Max Critic Grad",
-                        "Avg Actor Grad", "Max Actor Grad"])
+        writer.writerow([
+            "Episode", "Reward 1", "Reward 2",
+            "Critic Loss 1", "Critic Loss 2",
+            "Actor Loss 1", "Actor Loss 2" 
+        ])
         
     #Training loop
     for ep in range(MAX_EPISODES):
@@ -52,14 +58,13 @@ def main():
             actions = []
             for i, agent in enumerate(agents):
                 # adding some noise for exploration
-                noise = max(0.5, (1 - ep / MAX_EPISODES*0.5))
+                noise = max(0.1, (1 - ep / MAX_EPISODES))
                 action = agent.act(obs[i], noise=noise)
                 actions.append(action)
             actions = np.array(actions)
             
             #Steps environment
             next_obs, rewards, dones, info = env.step(actions)
-            
             
             #Stores transition
             memory.add(obs, actions, rewards, next_obs, dones)
@@ -73,24 +78,22 @@ def main():
 
             #Checks done
             if dones[0]:
-                print(f"Episode terminated because: {info}")
+                print("Episode terminated because: ", info)
                 break
             
             #Learns every [UPDATE_FREQUENCY] steps
             if len(memory) > BATCH_SIZE and step % UPDATE_FREQUENCY == 0:
                 for agent_i, agent in enumerate(agents):
-                    #Samples from memory (replay buffer)
+                    # Sample and update
                     b_obs, b_actions, b_rewards, b_next_obs, b_dones = memory.sample(BATCH_SIZE)
-                    #Updates agent
-                    critic_loss, actor_loss, avg_cg, max_cg, avg_ag, max_ag = agent.update(
-                    b_obs, b_actions, b_rewards, b_next_obs, b_dones, agents)
-                    episode_critic_loss += critic_loss
-                    episode_actor_loss += actor_loss
-                    num_updates += 1
-                    episode_avg_critic_grad += avg_cg
-                    episode_max_critic_grad += max_cg
-                    episode_avg_actor_grad += avg_ag
-                    episode_max_actor_grad += max_ag
+                    
+                    # Modified to receive gradient norms from agent.update()
+                    (critic_loss, actor_loss) = agent.update(b_obs, b_actions, b_rewards, b_next_obs, b_dones, agents, episode_num=ep)
+                    
+                    # Track per-agent metrics
+                    episode_critic_loss[agent_i] += critic_loss
+                    episode_actor_loss[agent_i] += actor_loss
+                    num_updates_per_agent[agent_i] += 1
             
 
         # Inside the training loop (train.py), after each episode:
@@ -104,20 +107,24 @@ def main():
                 )
             print("Saved model checkpoints!") 
                
-        avg_critic_loss = (episode_critic_loss / num_updates) if (num_updates > 0) else 0.0
-        avg_actor_loss = (episode_actor_loss / num_updates) if (num_updates > 0) else 0.0
+        avg_critic_loss = [
+            episode_critic_loss[i] / num_updates_per_agent[i] 
+            if num_updates_per_agent[i] > 0 else 0.0 
+            for i in range(NUM_AGENTS)
+        ]
+        avg_actor_loss = [
+            episode_actor_loss[i] / num_updates_per_agent[i] 
+            if num_updates_per_agent[i] > 0 else 0.0 
+            for i in range(NUM_AGENTS)
+        ]
         
         with open("results/training_log.csv", "a", newline='') as f:
             writer = csv.writer(f)
             writer.writerow([
                 ep, 
-                episode_reward[0],
-                avg_critic_loss,
-                avg_actor_loss,
-                (episode_avg_critic_grad / num_updates) if (num_updates > 0) else 0.0,
-                (episode_max_critic_grad / num_updates) if (num_updates > 0) else 0.0,
-                (episode_avg_actor_grad / num_updates) if (num_updates > 0) else 0.0,
-                (episode_max_actor_grad / num_updates) if (num_updates > 0) else 0.0
+                episode_reward[0], episode_reward[1],
+                avg_critic_loss[0], avg_critic_loss[1],
+                avg_actor_loss[0], avg_actor_loss[1]
             ])
         
         print(f"Episode {ep} | Rewards: {episode_reward}")

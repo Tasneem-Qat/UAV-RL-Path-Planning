@@ -5,7 +5,7 @@ import numpy as np
 
 from networks import Actor, Critic
 from config import (DEVICE, GAMMA, TAU, ACTOR_LR, CRITIC_LR, 
-                    NUM_AGENTS, STATE_DIM, ACTION_DIM, GRAD_CLIP)
+                    NUM_AGENTS, STATE_DIM, ACTION_DIM, GRAD_CLIP, INIT_ENTROPY_COEFF, ENTROPY_DECAY)
 
 class MADDPGAgent:
     def __init__(self, agent_index):
@@ -48,7 +48,7 @@ class MADDPGAgent:
         action += noise * np.random.randn(*action.shape)
         return action
 
-    def update(self, obs, actions, rewards, next_obs, dones, all_agents):
+    def update(self, obs, actions, rewards, next_obs, dones, all_agents, episode_num):
         """
         takes a batch of transitions for all agents and a list of all agent objects to correctly compute target actions
         obs: shape [batch_size, num_agents, state_dim]
@@ -63,7 +63,7 @@ class MADDPGAgent:
         actions_t = torch.FloatTensor(actions).to(DEVICE)
         rewards_t = torch.FloatTensor(rewards[:, self.agent_index]).unsqueeze(1).to(DEVICE)
         next_obs_t = torch.FloatTensor(next_obs).to(DEVICE)
-        dones_t = torch.FloatTensor(dones[:, self.agent_index]).unsqueeze(1).to(DEVICE)
+        dones_t = torch.FloatTensor(dones[:, 0]).unsqueeze(1).to(DEVICE)
 
         # —————— Critic Update ——————
         #Builds centralized input for critic and flattens all states and all actions
@@ -93,12 +93,19 @@ class MADDPGAgent:
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
         
-        critic_grad_norms = []
-        for name, param in self.critic.named_parameters():
-            if param.grad is not None:
-                critic_grad_norms.append(param.grad.norm().item())
+        # critic_grad_norms = []
+        # for name, param in self.critic.named_parameters():
+        #     if param.grad is not None:
+        #         critic_grad_norms.append(param.grad.norm().item())
         
-        torch.nn.utils.clip_grad_norm_(self.critic.parameters(), GRAD_CLIP)
+        # torch.nn.utils.clip_grad_norm_(self.critic.parameters(), GRAD_CLIP)
+        critic_grad_norm = torch.nn.utils.clip_grad_norm_(
+            self.critic.parameters(), 
+            max_norm=GRAD_CLIP,  # From config.py
+            norm_type=2  # L2 norm (standard)
+        )
+        # critic_grad_norms = [p.grad.norm().item() for p in self.critic.parameters() if p.grad is not None] 
+        
         self.critic_optimizer.step()
         
         # —————— Actor Update ——————
@@ -115,12 +122,16 @@ class MADDPGAgent:
         self.actor_optimizer.zero_grad()
         actor_loss.backward()
         
-        actor_grad_norms = []
-        for name, param in self.actor.named_parameters():
-            if param.grad is not None:
-                actor_grad_norms.append(param.grad.norm().item())
+        # torch.nn.utils.clip_grad_norm_(self.actor.parameters(), GRAD_CLIP*0.5)
+        actor_grad_norm = torch.nn.utils.clip_grad_norm_(
+            self.actor.parameters(),
+            max_norm=GRAD_CLIP,  # Same as critic
+            norm_type=2
+        )
         
-        torch.nn.utils.clip_grad_norm_(self.actor.parameters(), GRAD_CLIP*0.5)
+        # for p in self.actor.parameters():
+        #     print(p.grad.norm().item())
+    
         self.actor_optimizer.step()
         
         # print(f"Agent {self.agent_index} | Critic Loss: {critic_loss.item():.4f}")
@@ -137,14 +148,8 @@ class MADDPGAgent:
         self._soft_update(self.target_actor, self.actor, TAU)
         self._soft_update(self.target_critic, self.critic, TAU)
         
-        avg_critic_grad = np.mean(critic_grad_norms) if critic_grad_norms else 0
-        max_critic_grad = np.max(critic_grad_norms) if critic_grad_norms else 0
-        avg_actor_grad = np.mean(actor_grad_norms) if actor_grad_norms else 0
-        max_actor_grad = np.max(actor_grad_norms) if actor_grad_norms else 0
         
-        return critic_loss.item(), actor_loss.item(), \
-               avg_critic_grad, max_critic_grad, \
-               avg_actor_grad, max_actor_grad
+        return critic_loss.item(), actor_loss.item()
 
     def _soft_update(self, target, source, tau):
         """

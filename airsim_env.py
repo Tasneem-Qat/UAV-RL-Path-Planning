@@ -21,7 +21,8 @@ class AirSimMultiAgentEnv:
         
         # Sets goal coordinates for each drone as a dictionary: drone name -> respective target
         self.goal_positions = {
-            "Drone1": np.array([15.0, 0.0, -0.5])
+            "Drone1": np.array([15.0, 2.0, -0.5]),
+            "Drone2": np.array([15.0, -2.0, -0.5])
         }
         
         # Reward & termination parameters
@@ -30,15 +31,20 @@ class AirSimMultiAgentEnv:
         self.R_COLLISION = 30.0   # collision penalty
         self.R_NEAR = 0.3         # near-miss penalty factor
         self.d_safe = 0.5        # safe distance for near-miss
-        self.R_STEP = 0.005         # per-step penalty
+        self.R_STEP = 0.1         # per-step penalty
         self.R_TIMEOUT = 10.0     # penalty for exceeding max steps
         self.R_SMOOTH = 0.1      # smoothness reward
         
         self.max_episode_steps = 200
         self.current_step = 0
         
-        # collision threshold fallback (using Lidar)
+        # collision parmeters
         self.collision_threshold = 0.5  # meters
+        self.success_threshold = 0.5
+        self.collision_flags = {name: False for name in self.drone_names}
+        self.kick_strength = 3.0  # Adjust this value based on testing
+        self.collision_cooldown = {name: 0 for name in self.drone_names}
+        self.cooldown_duration = 10  # Steps to ignore after kick
         
         # Track last distance and last action per drone
         self.last_distance = {}
@@ -56,17 +62,16 @@ class AirSimMultiAgentEnv:
         self.current_step = 0
         self.last_distance.clear()
         self.last_action.clear()
+        init_x = np.random.uniform(-0.5,0.5)
+        init_y = [np.random.uniform(1.5,2.0), np.random.uniform(-1.5,-2.0)]
+        init_z = -0.5
         
         # Randomly reposition each drone
-        for name in self.drone_names:
-            init_x = np.random.uniform(-2, 2)
-            init_y = np.random.uniform(-2, 2)
-            init_z = -0.5
-
+        for i, name in enumerate(self.drone_names):
             self.client.enableApiControl(True, vehicle_name=name)
             self.client.armDisarm(True, vehicle_name=name)
             # Directly move to altitude instead of takeoff to avoid freeze
-            self.client.moveToPositionAsync(init_x, init_y, init_z, velocity=2.0, vehicle_name=name).join()
+            self.client.moveToPositionAsync(init_x, init_y[i], init_z, velocity=2.0, vehicle_name=name).join()
 
         # Return initial observations
         return self._get_observation()
@@ -101,35 +106,91 @@ class AirSimMultiAgentEnv:
                 state.kinematics_estimated.position.z_val
             ])
 
+            goal = self.goal_positions[name]
+            rel_goal = goal - pos
+    
             # Compute reward
             reward = self._get_reward(i, np.array(actions[i]))
             rewards.append(reward)
-
-            done, info = self._check_done()
-            dones.append(done)
 
             # Next observation (position + velocity)
             next_obs.append(np.array([
                 pos[0], pos[1], pos[2],
                 state.kinematics_estimated.linear_velocity.x_val,
                 state.kinematics_estimated.linear_velocity.y_val,
-                state.kinematics_estimated.linear_velocity.z_val
+                state.kinematics_estimated.linear_velocity.z_val,
+                rel_goal[0], rel_goal[1], rel_goal[2]
             ]))
-
-        # Collapse into single done flag
+            
+        done, info = self._check_done()
+        dones = [done] * self.num_agents
+        
         return np.array(next_obs), rewards, dones, info
 
+    def _apply_velocity_kick(self, agent_index):
+        name = self.drone_names[agent_index]
+        state = self.client.getMultirotorState(vehicle_name=name)
+        
+        # Get current velocity
+        current_vel = np.array([
+            state.kinematics_estimated.linear_velocity.x_val,
+            state.kinematics_estimated.linear_velocity.y_val,
+            0  # Ignore vertical velocity
+        ])
+    
+        # Get collision direction (simplified example)
+        collision_info = self.client.simGetCollisionInfo(vehicle_name=name)
+        collision_normal = np.array([
+            collision_info.normal.x_val,
+            collision_info.normal.y_val,
+            collision_info.normal.z_val
+        ])
+        collision_normal[2] = 0  # Keep horizontal
+        collision_normal /= np.linalg.norm(collision_normal) + 1e-6
+
+        # Calculate reflection direction (modified for wall skimming)
+        tangent_component = np.dot(current_vel, collision_normal) * collision_normal
+        reflection_dir = current_vel - 2 * tangent_component  # Mirror velocity
+        
+        # Normalize and combine with collision normal kick
+        reflection_dir /= np.linalg.norm(reflection_dir) + 1e-6
+        combined_dir = collision_normal + 0.5 * reflection_dir  # Adjust weights
+        combined_dir /= np.linalg.norm(combined_dir) + 1e-6
+        
+        # Apply stronger kick for parallel cases
+        kick_velocity = combined_dir * self.kick_strength * 1.5  # 50% boost
+        
+        # Apply kick velocity
+        # kick_velocity = collision_normal * self.kick_strength
+        
+        self.client.moveByVelocityZAsync(
+            vx=kick_velocity[0],
+            vy=kick_velocity[1],
+            z=-0.5,
+            duration=0.3,
+            vehicle_name=name
+        ).join()
+        
     def _get_observation(self):
         obs = []
         for name in self.drone_names:
             state = self.client.getMultirotorState(vehicle_name=name)
-            obs.append([
+            pos = np.array([
                 state.kinematics_estimated.position.x_val,
                 state.kinematics_estimated.position.y_val,
-                state.kinematics_estimated.position.z_val,
+                state.kinematics_estimated.position.z_val
+                ])  # Current position
+            goal = self.goal_positions[name]  # Absolute goal position
+            rel_goal = goal - pos  # Relative vector to goal
+            
+            obs.append([
+                # Current state
+                pos[0], pos[1], pos[2],
                 state.kinematics_estimated.linear_velocity.x_val,
                 state.kinematics_estimated.linear_velocity.y_val,
                 state.kinematics_estimated.linear_velocity.z_val,
+                # Goal information
+                rel_goal[0], rel_goal[1], rel_goal[2]
             ])
         return np.array(obs)
 
@@ -182,8 +243,13 @@ class AirSimMultiAgentEnv:
         # 2) Collision & near-miss penalty
         collided = self._check_collision(agent_index)
         if collided:
-            reward -= self.R_COLLISION
+            if not self.collision_flags[name]:
+                # First timestep of collision
+                reward -= self.R_COLLISION
+                self._apply_velocity_kick(agent_index)
+                self.collision_flags[name] = True
         else:
+            self.collision_flags[name] = False
             d_obs = self._get_nearest_obstacle_distance(agent_index)
             if d_obs < self.d_safe:
                 reward -= self.R_NEAR * (1 - d_obs / self.d_safe)
@@ -205,48 +271,98 @@ class AirSimMultiAgentEnv:
 
     def _check_collision(self, agent_index):
         name = self.drone_names[agent_index]
+        state = self.client.getMultirotorState(vehicle_name=name)
+        pos = np.array([
+            state.kinematics_estimated.position.x_val,
+            state.kinematics_estimated.position.y_val,
+            state.kinematics_estimated.position.z_val
+        ])
+
+        # Existing collision checks
         info = self.client.simGetCollisionInfo(vehicle_name=name)
-        
-        # Add explicit check for "is_arm collision" (common in AirSim)
         api_collided = info.has_collided or "arm" in info.object_name.lower()
         
-        # Improve LIDAR reliability (average over last 5 readings)
         d_obs = self._get_nearest_obstacle_distance(agent_index)
         lidar_collided = d_obs < self.collision_threshold
         
         distances = self._get_sensor_distances(agent_index)
-        collision_threshold = 0.5  # In meters
+        collision_threshold = 0.5
         sensor_collided = any(d < collision_threshold for d in distances)
+        
+        # Check for collisions with other drones
+        inter_drone_collision = False
+        for other_name in self.drone_names:
+            if other_name == name:
+                continue
+            other_state = self.client.getMultirotorState(vehicle_name=other_name)
+            other_pos = np.array([
+                other_state.kinematics_estimated.position.x_val,
+                other_state.kinematics_estimated.position.y_val,
+                other_state.kinematics_estimated.position.z_val
+            ])
+            distance = np.linalg.norm(pos - other_pos)
+            if distance < self.collision_threshold:
+                inter_drone_collision = True
+                break
+        
+        collided = (api_collided or lidar_collided 
+                    or sensor_collided or inter_drone_collision)
 
-        return api_collided or lidar_collided or sensor_collided
+        return collided
 
     def _check_done(self):
         done = False
         details = {}
-        
+        all_goals_reached = True
+        any_collision = False
+        num_of_collided_agents = 0
+        all_collided = False
+        timeout = self.current_step >= self.max_episode_steps
+        # print(f"Current step: {self.current_step}, Timeout: {timeout}")
+
+        # Check status for all drones
         for i, name in enumerate(self.drone_names):
+            # Initialize per-drone details
+            details[name] = "Ongoing"
+            
             # Check collision
             if self._check_collision(i):
-                done = True
-                details[name] = "collision"
-                break
-            # Check timeout
-            timeout = (self.current_step >= self.max_episode_steps)
-            if timeout:
-                done = True
-                details[name] = "timeout"
-                break
-
-        # Check goal
-        if not done:
-            for name in self.drone_names:
-                state = self.client.getMultirotorState(vehicle_name=name)
-                pos = np.array([state.kinematics_estimated.position.x_val,
-                                state.kinematics_estimated.position.y_val,
-                                state.kinematics_estimated.position.z_val])
-                goal = self.goal_positions[name]
-                if np.linalg.norm(pos - goal) <= 0.5:
-                    done = True
-                    details[name] = "goal reached"
-                    break
+                num_of_collided_agents+=1
+                details[name] = "Collision"
+                 
+            # Check goal status
+            state = self.client.getMultirotorState(vehicle_name=name)
+            pos = np.array([state.kinematics_estimated.position.x_val,
+                            state.kinematics_estimated.position.y_val,
+                            state.kinematics_estimated.position.z_val])
+            goal = self.goal_positions[name]
+            distance_to_goal = np.linalg.norm(pos - goal)
+            
+            if distance_to_goal > 0.5:
+                all_goals_reached = False
+            else:
+                details[name] = "Goal Reached"
+                
+            success_count = sum(1 for v in details.values() if v == "Goal Reached")
+    
+        # Termination conditions (order matters!)
+        if all_goals_reached:
+            done = True
+            details["global"] = "All Goals Reached"
+        elif success_count/self.num_agents >= self.success_threshold:
+            done = True
+            details["global"] = "Partial Success"
+        # elif any_collision:
+        #     done = True
+        #     details["global"] = "collision"
+        elif num_of_collided_agents == NUM_AGENTS:
+            done = True
+            details["global"] = "Collisions"
+        elif timeout:
+            done = True
+            details["global"] = "Timeout"
+        # elif both_collided:
+        #     done = True
+        #     details["global"] = "Both_Collided"
+        
         return done, details

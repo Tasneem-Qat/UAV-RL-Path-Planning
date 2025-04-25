@@ -10,10 +10,10 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 #Environment Parameters:
 
 #Number of drone agents present
-NUM_AGENTS = 1
+NUM_AGENTS = 2
 
-#Specifies the state dimensions for each drone, 6 values: position, velocity, goal
-STATE_DIM = 6
+#Specifies the state dimensions for each drone, 9 values: # 6 (pos + vel) + 3 (rel_goal)
+STATE_DIM = 9
 
 #Number of actions that the drone can take. 3 values: velocity in three directions
 ACTION_DIM = 3 
@@ -22,10 +22,10 @@ ACTION_DIM = 3
 #Training Settings:
 
 #Episodes of training (like epochs)
-MAX_EPISODES = 10000
+MAX_EPISODES = 1000
 
 #Max steps in each episode
-MAX_STEPS = 1000000
+MAX_STEPS = 200
 
 #Discount factor: determines how much the RL agent cares about distant future rewards relative to those in the immediate future        
 GAMMA = 0.95
@@ -34,13 +34,16 @@ GAMMA = 0.95
 TAU = 0.01
 
 #Learning rate for actor
-ACTOR_LR =  0.00001
+ACTOR_LR =  0.0001
 
 #Learning rate for critic
-CRITIC_LR =  0.00001
+CRITIC_LR =  0.0001
 
 #Gradient clipping
-GRAD_CLIP = 1
+GRAD_CLIP = 1.0
+
+INIT_ENTROPY_COEFF = 0.2
+ENTROPY_DECAY = 0.995
 
 #Training batch size
 BATCH_SIZE = 64
@@ -49,7 +52,7 @@ BATCH_SIZE = 64
 UPDATE_FREQUENCY = 20
 
 #Buffer which stores experience in replay_buffer.py
-REPLAY_BUFFER_SIZE = int(2e6)
+REPLAY_BUFFER_SIZE = int(4e6)
 #_______________________________________________________________________________________
 
 #Neural Network Settings:

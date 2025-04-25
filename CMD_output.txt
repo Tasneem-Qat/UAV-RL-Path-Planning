@@ -1,1811 +1,745 @@
 README
-v1.0 with fixed reward and termination range, fixed logging, critic learning rate, and actor update fix, gradient logging, lower hidden dim (256 to 128), reduced learning rates(1e-5), increased step penalty to 0.005.
+v1.2 but with 2 drones, collision loops, and kick implementation with tangents
 
 python .\train.py
 Connected!
 Client Ver:1 (Min Req: 1), Server Ver:1 (Min Req: 1)
 
-Episode terminated because: {'Drone1': 'collision'}
-Episode 0 | Rewards: [-51.19736969]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 1 | Rewards: [-77.85027663]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 2 | Rewards: [-28.97137931]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 3 | Rewards: [-82.57654933]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 4 | Rewards: [-79.15390491]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 5 | Rewards: [-104.93683966]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 6 | Rewards: [-107.13802123]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 7 | Rewards: [-69.59322985]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 8 | Rewards: [-69.84673487]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 9 | Rewards: [-47.51303692]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 10 | Rewards: [-57.9825655]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 11 | Rewards: [-94.72565803]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 12 | Rewards: [-21.39756604]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 13 | Rewards: [-70.1345901]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 14 | Rewards: [-86.01109304]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 15 | Rewards: [-34.5464901]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 16 | Rewards: [-80.68968037]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 17 | Rewards: [-87.04112348]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 18 | Rewards: [-115.87666319]
-Episode terminated because: {'Drone1': 'collision'}
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 0 | Rewards: [-123.01951509 -109.17087808]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 1 | Rewards: [-34.04931611 -62.51630974]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 2 | Rewards: [-112.39886243 -105.03395825]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 3 | Rewards: [-76.37839378 -38.02708418]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 4 | Rewards: [ -78.7037125  -150.89606176]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 5 | Rewards: [-61.77656154 -35.86185977]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 6 | Rewards: [-217.6637344   -44.21400539]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 7 | Rewards: [-153.20152336  -46.46378623]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 8 | Rewards: [-181.86697047  -67.52216973]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 9 | Rewards: [-328.37961867  -80.33668071]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 10 | Rewards: [-0.86573308 -0.09857279]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 11 | Rewards: [-146.71751573  -28.86985465]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 12 | Rewards: [-177.17582324  -52.45091387]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 13 | Rewards: [ -1.60358755 -32.86124845]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 14 | Rewards: [-33.51350006 -62.30501657]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 15 | Rewards: [-0.28336151 -0.21265706]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 16 | Rewards: [-209.12681666 -197.03101555]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 17 | Rewards: [-54.93810769 -38.68307012]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 18 | Rewards: [-100.82684693  -73.67426749]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 19 | Rewards: [-89.30671397]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 20 | Rewards: [-54.57431794]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 21 | Rewards: [-79.59478218]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 22 | Rewards: [-78.39164738]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 23 | Rewards: [-91.24953138]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 24 | Rewards: [-77.85946441]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 25 | Rewards: [-64.30516365]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 26 | Rewards: [-133.53455976]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 27 | Rewards: [-86.0822703]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 28 | Rewards: [-85.10002775]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 29 | Rewards: [-61.59748214]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 30 | Rewards: [-77.07237489]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 31 | Rewards: [-78.55098287]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 32 | Rewards: [-64.61812471]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 33 | Rewards: [-77.9585719]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 34 | Rewards: [-81.79578653]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 35 | Rewards: [-53.09503629]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 36 | Rewards: [-81.87056611]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 37 | Rewards: [-79.33621516]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 38 | Rewards: [-70.09937068]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 19 | Rewards: [-267.0008104  -195.83052308]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 20 | Rewards: [-13.90098419 -71.29814099]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 21 | Rewards: [-423.97835812 -127.24709546]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 22 | Rewards: [-29.37930852 -28.75617034]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 23 | Rewards: [-134.59750998  -37.063798  ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 24 | Rewards: [-172.88787556 -145.62033445]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 25 | Rewards: [-25.71585766 -25.64554899]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 26 | Rewards: [ -30.752815   -100.37542267]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 27 | Rewards: [-104.37256671 -158.27204916]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 28 | Rewards: [ -79.8814685  -237.95687814]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 29 | Rewards: [-33.86769068 -42.16457945]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 30 | Rewards: [-158.66432937 -122.75381456]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 31 | Rewards: [-126.22595954  -38.53860294]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 32 | Rewards: [-82.44343607 -41.59850064]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 33 | Rewards: [ -34.49431692 -269.96331785]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 34 | Rewards: [-155.27480621  -58.30223938]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 35 | Rewards: [-64.46924704 -67.93113678]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 36 | Rewards: [ -39.94260166 -183.22625197]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 37 | Rewards: [-158.78403973 -108.63610534]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 38 | Rewards: [-123.3770866   -85.64746957]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 39 | Rewards: [-85.74173809]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 40 | Rewards: [-67.18033856]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 41 | Rewards: [-64.7548958]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 42 | Rewards: [-62.97141579]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 43 | Rewards: [-57.88627465]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 44 | Rewards: [-55.50580758]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 45 | Rewards: [-96.21950049]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 46 | Rewards: [-85.65491166]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 47 | Rewards: [-76.2493683]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 48 | Rewards: [-58.27696079]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 49 | Rewards: [-85.92552537]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 50 | Rewards: [-53.87004524]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 51 | Rewards: [-49.72895727]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 52 | Rewards: [-61.98413273]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 53 | Rewards: [-66.50395783]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 54 | Rewards: [-65.34032139]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 55 | Rewards: [-73.61471132]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 56 | Rewards: [-66.55119298]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 57 | Rewards: [-47.21742351]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 58 | Rewards: [-80.98538641]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 39 | Rewards: [-154.94818876  -37.22672902]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'goal reached', 'global': 'partial success'}
+Episode 40 | Rewards: [-29.9067479  630.87250131]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 41 | Rewards: [-160.41149157 -130.369076  ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 42 | Rewards: [-159.1230226   -99.32438815]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 43 | Rewards: [-22.52039862 -28.97811024]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 44 | Rewards: [ -76.96758843 -113.05628128]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 45 | Rewards: [-30.61347123 -26.03148395]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 46 | Rewards: [ -97.60021266 -109.41486401]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 47 | Rewards: [-68.76639244 -41.16722152]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 48 | Rewards: [-32.74140138 -53.47159184]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 49 | Rewards: [-65.40773832 -85.8872147 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 50 | Rewards: [-61.1796748  -55.71764855]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 51 | Rewards: [-93.14251983 -49.26379862]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 52 | Rewards: [ -39.09728307 -114.02740877]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 53 | Rewards: [-61.0218537 -51.2107569]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 54 | Rewards: [  4.70997136 -20.19760516]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 55 | Rewards: [-153.71564234  -92.15562968]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 56 | Rewards: [-92.16358542 -73.42372208]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 57 | Rewards: [-25.21191469 -27.7868548 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 58 | Rewards: [ -23.25039603 -110.68003596]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 59 | Rewards: [-69.04974277]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 60 | Rewards: [-75.35811199]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 61 | Rewards: [-103.04441818]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 62 | Rewards: [-62.0184232]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 63 | Rewards: [-64.84677628]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 64 | Rewards: [-48.25453539]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 65 | Rewards: [-65.40410364]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 66 | Rewards: [-70.83310873]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 67 | Rewards: [-87.67876036]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 68 | Rewards: [-83.36937801]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 69 | Rewards: [-77.76846196]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 70 | Rewards: [-83.49127669]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 71 | Rewards: [-78.1758384]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 72 | Rewards: [-82.65553512]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 73 | Rewards: [-79.09027943]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 74 | Rewards: [-63.62263323]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 75 | Rewards: [-78.78876823]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 76 | Rewards: [-66.67546379]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 77 | Rewards: [-71.34135229]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 78 | Rewards: [-75.37870685]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 59 | Rewards: [ -28.31364406 -166.35476744]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 60 | Rewards: [-37.88115227 -23.35124422]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 61 | Rewards: [-37.27341351 -49.84670126]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 62 | Rewards: [-32.84102523 -31.24391022]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 63 | Rewards: [ -25.37446335 -179.23218276]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 64 | Rewards: [-32.92094047 -43.74683616]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 65 | Rewards: [-94.12866635 -58.75385199]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 66 | Rewards: [-36.62129725 -26.1238754 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 67 | Rewards: [-120.77075305 -209.73863248]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 68 | Rewards: [-37.46687937 -59.23275842]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 69 | Rewards: [-27.87686654 -91.18391634]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 70 | Rewards: [ -2.67374573 -30.86201925]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 71 | Rewards: [-38.77720425 -40.44672939]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 72 | Rewards: [-62.05433393 -30.06938332]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 73 | Rewards: [ -68.89676666 -161.01829766]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 74 | Rewards: [ -3.75960772 -28.30568699]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 75 | Rewards: [ -64.74764251 -121.47204886]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 76 | Rewards: [ -41.01267338 -126.59266189]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 77 | Rewards: [-35.67514182 -31.36428611]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 78 | Rewards: [-36.82624737 -93.720253  ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 79 | Rewards: [-131.85833201]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 80 | Rewards: [-78.45151349]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 81 | Rewards: [-94.58754407]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 82 | Rewards: [-76.03594713]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 83 | Rewards: [-76.86672319]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 84 | Rewards: [-66.62509196]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 85 | Rewards: [-84.85463694]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 86 | Rewards: [-81.1288884]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 87 | Rewards: [-74.07803902]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 88 | Rewards: [-80.61297043]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 89 | Rewards: [-108.13188703]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 90 | Rewards: [-103.50547253]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 91 | Rewards: [-89.61317454]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 92 | Rewards: [-96.80978882]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 93 | Rewards: [-59.74673466]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 94 | Rewards: [-68.74173864]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 95 | Rewards: [-45.16490829]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 96 | Rewards: [-37.20997685]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 97 | Rewards: [-97.81510417]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 98 | Rewards: [-76.45816514]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 79 | Rewards: [-41.75095839 -67.38791071]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 80 | Rewards: [-40.91423561 -39.35022968]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 81 | Rewards: [-105.09030375  -66.14630127]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 82 | Rewards: [ -43.41054202 -165.24994365]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 83 | Rewards: [-58.42777227 -27.88127451]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 84 | Rewards: [-40.28907908 -75.98291453]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 85 | Rewards: [-76.22001292   0.20386578]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 86 | Rewards: [-66.70704069 -64.62764216]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 87 | Rewards: [ -71.85476626 -106.51883051]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 88 | Rewards: [ -40.85692757 -131.12489336]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 89 | Rewards: [-38.30692051 -44.88355363]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 90 | Rewards: [-38.58223128 -74.66238549]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 91 | Rewards: [-37.53627213 -74.08061886]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 92 | Rewards: [-11.63493826 -74.08662452]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 93 | Rewards: [-101.42470443 -193.90958615]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 94 | Rewards: [ -38.25641673 -172.45086034]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 95 | Rewards: [ -69.92641394 -137.5087173 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 96 | Rewards: [ -37.67575562 -112.92881397]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 97 | Rewards: [ -35.30442736 -137.17027694]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 98 | Rewards: [-38.26647221 -75.25834231]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 99 | Rewards: [-65.78410918]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 100 | Rewards: [-77.25246332]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 101 | Rewards: [-57.04193995]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 102 | Rewards: [-57.98420181]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 103 | Rewards: [-70.03542599]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 104 | Rewards: [-63.39727024]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 105 | Rewards: [-72.46256372]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 106 | Rewards: [-48.80612372]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 107 | Rewards: [-62.66771891]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 108 | Rewards: [-66.9380984]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 109 | Rewards: [-67.48859274]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 110 | Rewards: [-63.78932652]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 111 | Rewards: [-79.55679539]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 112 | Rewards: [-77.92555813]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 113 | Rewards: [-80.32779281]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 114 | Rewards: [-68.48119563]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 115 | Rewards: [-63.80163963]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 116 | Rewards: [-54.19503254]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 117 | Rewards: [-81.68519206]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 118 | Rewards: [-63.10643303]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 99 | Rewards: [-39.13217443 -44.8878597 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 100 | Rewards: [-36.66846661 -81.30396114]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 101 | Rewards: [ -38.18015673 -137.09091378]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 102 | Rewards: [-33.45189103 -32.01197816]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 103 | Rewards: [ -36.35707091 -112.35751662]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 104 | Rewards: [ -8.20192409 -48.58018768]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 105 | Rewards: [ -67.70408073 -146.81787618]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 106 | Rewards: [ -37.63650374 -113.97876753]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 107 | Rewards: [-37.2161237  -53.38012109]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 108 | Rewards: [-33.96391056 -53.12844155]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 109 | Rewards: [-36.98247107 -53.91765384]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 110 | Rewards: [-68.28401011 -70.38221923]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 111 | Rewards: [-103.65013326 -169.24236014]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 112 | Rewards: [-65.41869856 -85.95860789]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 113 | Rewards: [ -28.88303906 -116.6602726 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 114 | Rewards: [ -26.46947809 -173.40376052]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 115 | Rewards: [-40.86461598 -97.27252857]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 116 | Rewards: [-73.80077522 -93.78097049]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 117 | Rewards: [ -68.20100742 -397.74968133]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 118 | Rewards: [-30.00369198 -79.21032948]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 119 | Rewards: [-112.25280809]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 120 | Rewards: [-76.57136801]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 121 | Rewards: [-77.05984319]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 122 | Rewards: [-77.03249696]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 123 | Rewards: [-95.94660036]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 124 | Rewards: [-76.47606691]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 125 | Rewards: [-74.49044293]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 126 | Rewards: [-95.46684296]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 127 | Rewards: [-75.94067024]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 128 | Rewards: [-53.64972463]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 129 | Rewards: [-117.75683712]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 130 | Rewards: [-82.03958783]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 131 | Rewards: [-29.40142674]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 132 | Rewards: [-30.71933205]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 133 | Rewards: [-54.13539145]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 134 | Rewards: [-85.23866469]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 135 | Rewards: [-78.24282657]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 136 | Rewards: [-48.9468037]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 137 | Rewards: [-30.60176159]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 138 | Rewards: [-64.71119206]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 119 | Rewards: [ -73.82940434 -282.98337945]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 120 | Rewards: [ -25.31869364 -195.86050685]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 121 | Rewards: [-139.4466596  -274.02343697]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 122 | Rewards: [-59.08879386 -51.37817067]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 123 | Rewards: [-61.91567043 -53.85275619]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 124 | Rewards: [ -25.48065564 -106.538784  ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 125 | Rewards: [-21.60309163 -73.71980221]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 126 | Rewards: [-19.04387722 -35.17460554]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 127 | Rewards: [ -79.93496916 -105.70053137]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 128 | Rewards: [-274.59988668 -146.4952639 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 129 | Rewards: [ -57.67673113 -138.00929681]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 130 | Rewards: [ -90.0246155  -201.99368662]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 131 | Rewards: [-181.59982214  -40.93055186]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 132 | Rewards: [-82.36428033 -43.4423255 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 133 | Rewards: [-18.41122911 -61.11721477]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 134 | Rewards: [ -61.9524518  -288.44335541]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 135 | Rewards: [-307.23307146 -361.37020671]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 136 | Rewards: [-47.26192798 -29.98813911]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 137 | Rewards: [-151.23523267  -71.33605052]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 138 | Rewards: [-115.68841231 -311.68175363]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 139 | Rewards: [-66.7499161]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 140 | Rewards: [-60.49472333]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 141 | Rewards: [-22.74504724]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 142 | Rewards: [-74.34324621]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 143 | Rewards: [-57.4662652]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 144 | Rewards: [-75.28226077]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 145 | Rewards: [-48.9674684]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 146 | Rewards: [-65.29707887]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 147 | Rewards: [-104.73703626]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 148 | Rewards: [-63.57167034]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 149 | Rewards: [-43.26717153]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 150 | Rewards: [-76.2145396]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 151 | Rewards: [-65.53081766]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 152 | Rewards: [-75.71856322]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 153 | Rewards: [-30.08948254]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 154 | Rewards: [-93.01998891]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 155 | Rewards: [-74.56739097]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 156 | Rewards: [-100.18504918]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 157 | Rewards: [-73.20975393]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 158 | Rewards: [-60.89117186]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 139 | Rewards: [-373.24133642  -97.51447425]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 140 | Rewards: [   7.94382746 -100.15482829]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 141 | Rewards: [-50.39550864 -62.85410143]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 142 | Rewards: [-19.99883427 -82.26191134]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 143 | Rewards: [-338.879349    -39.94697893]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 144 | Rewards: [-46.48141872 -62.89093786]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 145 | Rewards: [-86.33458353 -62.31794736]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 146 | Rewards: [-287.52543606 -108.28018722]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 147 | Rewards: [-23.19341132 -36.98573594]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 148 | Rewards: [ -56.62715024 -159.40009278]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 149 | Rewards: [-89.85173119 -49.35630838]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 150 | Rewards: [-50.66094315 -27.76688556]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 151 | Rewards: [-50.67529726 -72.8707135 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 152 | Rewards: [-399.7636013  -215.09003792]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 153 | Rewards: [-243.89835195 -226.32063868]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 154 | Rewards: [-215.00714121  -58.71694526]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 155 | Rewards: [-148.92120236  -59.04966522]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 156 | Rewards: [-218.03492276  -47.67809354]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 157 | Rewards: [-210.5384259 -115.1730581]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 158 | Rewards: [-237.30850953 -115.82985245]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 159 | Rewards: [-76.32169199]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 160 | Rewards: [-66.67163545]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 161 | Rewards: [-54.0581971]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 162 | Rewards: [-68.92375803]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 163 | Rewards: [-100.03191734]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 164 | Rewards: [-174.61597126]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 165 | Rewards: [-78.75511002]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 166 | Rewards: [-73.8205011]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 167 | Rewards: [-75.13181304]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 168 | Rewards: [-71.17556575]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 169 | Rewards: [-30.07853358]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 170 | Rewards: [-114.44143003]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 171 | Rewards: [-76.78945295]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 172 | Rewards: [-79.13828939]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 173 | Rewards: [-81.16708036]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 174 | Rewards: [-67.72615099]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 175 | Rewards: [-51.20415814]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 176 | Rewards: [-61.11603883]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 177 | Rewards: [-66.78528086]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 178 | Rewards: [-77.56943229]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 159 | Rewards: [-162.0666158   -54.07051394]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 160 | Rewards: [-479.56348544  -34.01968887]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 161 | Rewards: [-202.03429391 -358.24280628]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 162 | Rewards: [-388.93877334 -147.61417637]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 163 | Rewards: [-151.64470731 -149.95252365]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 164 | Rewards: [-142.70791447 -115.77059673]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 165 | Rewards: [-452.7937301  -179.75348808]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 166 | Rewards: [691.23648424   2.08764651]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 167 | Rewards: [-468.182228   -174.76376557]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 168 | Rewards: [-439.25568858  -23.70810651]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 169 | Rewards: [-364.75089492 -246.75016292]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 170 | Rewards: [-299.9538834  -185.00495991]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'goal reached', 'global': 'partial success'}
+Episode 171 | Rewards: [-209.84938509  712.44168355]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 172 | Rewards: [-207.69360741 -275.10799238]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'goal reached', 'global': 'partial success'}
+Episode 173 | Rewards: [-261.38027092  686.20014716]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 174 | Rewards: [-328.40684631 -138.51550425]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 175 | Rewards: [722.6547382   13.62202537]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 176 | Rewards: [ 120.26175856 -281.34289056]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 177 | Rewards: [-154.58324363 -120.97842828]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 178 | Rewards: [-186.72923637  -85.65106134]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 179 | Rewards: [-80.77033734]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 180 | Rewards: [-60.83996604]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 181 | Rewards: [-68.45904895]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 182 | Rewards: [-74.83335725]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 183 | Rewards: [-65.36805368]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 184 | Rewards: [-72.52218131]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 185 | Rewards: [-69.33966997]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 186 | Rewards: [-215.65757541]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 187 | Rewards: [-68.42824623]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 188 | Rewards: [-81.55577454]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 189 | Rewards: [-59.99164167]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 190 | Rewards: [-42.81357649]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 191 | Rewards: [-73.33743401]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 192 | Rewards: [-124.38186995]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 193 | Rewards: [-28.84292302]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 194 | Rewards: [-93.11915253]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 195 | Rewards: [-69.30478594]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 196 | Rewards: [-76.4149152]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 197 | Rewards: [-74.49746409]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 198 | Rewards: [-60.02069688]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 179 | Rewards: [-193.21542461 -163.76077389]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 180 | Rewards: [-156.10815649 -144.98419502]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 181 | Rewards: [-114.12320376  -78.90725359]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 182 | Rewards: [-66.19451177 -58.45368899]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 183 | Rewards: [-30.08196899 -30.16811412]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 184 | Rewards: [-28.70733306 -27.76562904]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 185 | Rewards: [-21.20027967 -21.30416485]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 186 | Rewards: [-23.23111441 -24.3086693 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 187 | Rewards: [-218.73972443 -187.25965242]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 188 | Rewards: [-52.66649533 -53.94767533]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 189 | Rewards: [-132.48585156 -151.28718613]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 190 | Rewards: [-162.65623473 -127.36067075]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 191 | Rewards: [-125.40041234  -86.89332113]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 192 | Rewards: [-133.33035889  -83.75749282]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 193 | Rewards: [-78.48873302 -62.07152412]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 194 | Rewards: [-55.26858539 -55.18233614]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 195 | Rewards: [-71.43136489 -31.00865121]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 196 | Rewards: [-83.02943324 -53.91318004]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 197 | Rewards: [-24.08663662 -23.15186806]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 198 | Rewards: [-24.35415533 -25.27462138]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
 Saved model checkpoints!
-Episode 199 | Rewards: [-69.20150353]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 200 | Rewards: [-64.3786902]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 201 | Rewards: [-78.47694559]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 202 | Rewards: [-130.68386278]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 203 | Rewards: [-72.84850505]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 204 | Rewards: [-64.7049058]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 205 | Rewards: [-91.93955955]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 206 | Rewards: [-76.293173]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 207 | Rewards: [-33.77839902]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 208 | Rewards: [-82.28678736]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 209 | Rewards: [-78.78114222]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 210 | Rewards: [-61.32243075]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 211 | Rewards: [-71.92543547]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 212 | Rewards: [-79.4495196]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 213 | Rewards: [-217.39911847]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 214 | Rewards: [-75.16267382]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 215 | Rewards: [-80.46559729]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 216 | Rewards: [-72.804068]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 217 | Rewards: [-73.86647485]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 218 | Rewards: [-89.14660946]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 199 | Rewards: [-38.88174677 -59.184306  ]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 200 | Rewards: [-70.3248612  -56.38919299]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 201 | Rewards: [-70.04405847 -89.20805651]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 202 | Rewards: [ -68.91248156 -495.99791615]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 203 | Rewards: [-55.82929349 -53.44004513]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 204 | Rewards: [ -39.96556678 -729.26377362]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 205 | Rewards: [ -67.93236583 -424.71636751]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 206 | Rewards: [-102.40521148 -374.09148176]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 207 | Rewards: [ -96.25314226 -817.39828734]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 208 | Rewards: [ -65.89381885 -817.72509549]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 209 | Rewards: [ -95.29119009 -433.40149068]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 210 | Rewards: [ -70.63663441 -546.34274142]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 211 | Rewards: [ -66.76317788 -512.88064094]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 212 | Rewards: [-27.38101279   2.55841902]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 213 | Rewards: [ -94.47758269 -334.26059319]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 214 | Rewards: [-29.00308031   0.86122136]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 215 | Rewards: [ -62.21001038 -305.58529386]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 216 | Rewards: [ -59.96097333 -423.94850386]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 217 | Rewards: [ -68.66932031 -209.64947213]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 218 | Rewards: [ -94.00388456 -272.67003795]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
 Saved model checkpoints!
-Episode 219 | Rewards: [-74.30923811]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 220 | Rewards: [-62.75684583]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 221 | Rewards: [-93.79246964]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 222 | Rewards: [-93.6705151]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 223 | Rewards: [-104.0822256]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 224 | Rewards: [-79.02167436]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 225 | Rewards: [-80.78009392]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 226 | Rewards: [-67.44346259]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 227 | Rewards: [-68.40100851]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 228 | Rewards: [-70.40576965]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 229 | Rewards: [-85.13440473]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 230 | Rewards: [-42.51908412]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 231 | Rewards: [-64.1842524]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 232 | Rewards: [-76.1194142]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 233 | Rewards: [-31.6471155]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 234 | Rewards: [-72.88663649]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 235 | Rewards: [-61.3283282]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 236 | Rewards: [-71.08590455]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 237 | Rewards: [-63.6217216]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 238 | Rewards: [-61.17846282]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 219 | Rewards: [ -94.09419005 -362.66977217]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 220 | Rewards: [-53.93727995 -24.83690927]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 221 | Rewards: [-20.53797797 -27.16095096]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 222 | Rewards: [ -63.99126513 -391.13258237]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 223 | Rewards: [ -63.26413616 -478.8960495 ]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 224 | Rewards: [ -87.44528214 -239.29433851]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 225 | Rewards: [-47.81616965 -47.24077928]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 226 | Rewards: [ -36.42821395 -446.45744457]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 227 | Rewards: [ -64.06914955 -291.87283773]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 228 | Rewards: [ -65.98049125 -594.08341613]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 229 | Rewards: [ -59.54132841 -447.42270498]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 230 | Rewards: [ -37.34292364 -331.65874357]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 231 | Rewards: [ -34.35763971 -148.7417109 ]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 232 | Rewards: [-124.75015604 -568.1247807 ]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 233 | Rewards: [-117.92286139 -325.63967221]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 234 | Rewards: [ -87.52172295 -627.01244779]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 235 | Rewards: [ -57.09869794 -537.00942244]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 236 | Rewards: [ -72.06704664 -310.29200203]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 237 | Rewards: [ -88.09062145 -477.08053671]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 238 | Rewards: [-100.99480497 -337.42548165]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
 Saved model checkpoints!
-Episode 239 | Rewards: [-57.17663724]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 240 | Rewards: [-90.04355875]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 241 | Rewards: [-47.35562943]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 242 | Rewards: [-78.48742669]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 243 | Rewards: [-68.48419636]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 244 | Rewards: [-57.31194619]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 245 | Rewards: [-59.34683966]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 246 | Rewards: [-77.2459611]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 247 | Rewards: [-76.34478452]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 248 | Rewards: [-51.51342735]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 249 | Rewards: [-114.38818258]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 250 | Rewards: [-66.70724475]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 251 | Rewards: [-75.26915711]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 252 | Rewards: [-75.47390659]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 253 | Rewards: [-111.14416475]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 254 | Rewards: [-104.6512196]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 255 | Rewards: [-127.9007057]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 256 | Rewards: [-102.74477411]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 257 | Rewards: [-64.11251033]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 258 | Rewards: [-62.43981351]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 239 | Rewards: [-24.07001084 -23.67562163]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 240 | Rewards: [ -60.50781063 -181.00669741]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 241 | Rewards: [ -55.09854733 -419.62499842]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 242 | Rewards: [ -90.64545588 -301.69811149]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 243 | Rewards: [ -56.03368316 -361.34177716]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 244 | Rewards: [-114.1452163  -453.29944083]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 245 | Rewards: [ 658.66658758 -101.12288686]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 246 | Rewards: [ 687.63824914 -173.77282579]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 247 | Rewards: [ -63.01861478 -309.23232824]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 248 | Rewards: [ -47.49661625 -301.0397389 ]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 249 | Rewards: [ 658.91865953 -196.35626401]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 250 | Rewards: [ 658.50844212 -292.28152194]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 251 | Rewards: [-82.9215292  -54.03995718]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 252 | Rewards: [ 720.31176608 -129.42667826]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 253 | Rewards: [ -53.45950533 -118.97406361]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 254 | Rewards: [659.45452109 -95.49832184]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 255 | Rewards: [-15.45058581 -17.90287113]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 256 | Rewards: [694.26006389  16.71871735]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 257 | Rewards: [662.70066128 -40.15882735]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 258 | Rewards: [661.27925289 -50.71592435]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
 Saved model checkpoints!
-Episode 259 | Rewards: [-65.83426879]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 260 | Rewards: [-64.98386276]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 261 | Rewards: [-60.22224402]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 262 | Rewards: [-50.15518861]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 263 | Rewards: [-80.05005302]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 264 | Rewards: [-95.0786289]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 265 | Rewards: [-130.37506281]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 266 | Rewards: [-29.98864881]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 267 | Rewards: [-69.50344029]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 268 | Rewards: [-59.9128227]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 269 | Rewards: [-60.51896559]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 270 | Rewards: [-73.57700691]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 271 | Rewards: [-188.49267844]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 272 | Rewards: [-74.76051747]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 273 | Rewards: [-86.44558712]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 274 | Rewards: [-75.3742811]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 275 | Rewards: [-65.36869456]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 276 | Rewards: [-68.22551628]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 277 | Rewards: [-67.09917212]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 278 | Rewards: [-91.56337444]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 259 | Rewards: [ -54.46770234 -450.10547798]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 260 | Rewards: [ -50.64552429 -415.27072587]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 261 | Rewards: [ 655.1402221 -271.6069639]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 262 | Rewards: [ -54.8065156  -298.38139833]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 263 | Rewards: [ -51.62414119 -208.06465374]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 264 | Rewards: [ 629.27499939 -260.76875614]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 265 | Rewards: [ -77.96446482 -295.59029395]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 266 | Rewards: [ 654.19677039 -281.46700855]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 267 | Rewards: [ -85.5558411 -324.5026646]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 268 | Rewards: [ 681.92612613 -326.85909745]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 269 | Rewards: [ -43.00729076 -115.52015949]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 270 | Rewards: [720.44668359 -49.27423985]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 271 | Rewards: [ 680.55987154 -329.03179566]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 272 | Rewards: [ 678.98082841 -272.03009984]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 273 | Rewards: [ 669.92555834 -398.38647414]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 274 | Rewards: [662.38457044 -19.09799039]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 275 | Rewards: [632.04081318 -17.11324793]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 276 | Rewards: [ 659.25295356 -248.94431204]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 277 | Rewards: [ 567.08484847 -226.72214432]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'collision', 'global': 'timeout'}
+Episode 278 | Rewards: [ -50.15086397 -509.14311201]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
 Saved model checkpoints!
-Episode 279 | Rewards: [-61.40107532]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 280 | Rewards: [-63.74754989]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 281 | Rewards: [-74.16019342]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 282 | Rewards: [-82.21626192]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 283 | Rewards: [-66.20404641]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 284 | Rewards: [-76.66764773]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 285 | Rewards: [-77.90868878]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 286 | Rewards: [-67.8300632]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 287 | Rewards: [-63.07042863]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 288 | Rewards: [-80.40473242]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 289 | Rewards: [-64.15976957]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 290 | Rewards: [-90.57365735]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 291 | Rewards: [-67.15329104]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 292 | Rewards: [-63.0858745]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 293 | Rewards: [-75.79599021]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 294 | Rewards: [-64.56102841]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 295 | Rewards: [-36.66253682]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 296 | Rewards: [-102.38618738]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 297 | Rewards: [-80.27644475]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 298 | Rewards: [-74.93833402]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 279 | Rewards: [ -18.98453162 -208.69393672]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 280 | Rewards: [ 689.51208504 -153.67832014]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 281 | Rewards: [663.16548379  12.63377445]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 282 | Rewards: [692.31982139 -10.84723596]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 283 | Rewards: [663.17253105 -82.63140265]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 284 | Rewards: [692.63133178 -13.68618913]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 285 | Rewards: [-28.10608755 -28.47785304]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 286 | Rewards: [-182.37684    -375.77375989]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 287 | Rewards: [721.39744213 -18.01439919]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 288 | Rewards: [ 596.74115568 -343.99582197]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 289 | Rewards: [ 691.74510541 -135.21887245]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 290 | Rewards: [601.50325351 -50.88517871]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 291 | Rewards: [663.62394364  18.1568655 ]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 292 | Rewards: [-51.14977821 -51.47699307]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 293 | Rewards: [-24.99101845 -24.8277376 ]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 294 | Rewards: [723.47529293  15.76679852]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 295 | Rewards: [-144.34589007 -128.78955341]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 296 | Rewards: [662.20718057 -51.97568715]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 297 | Rewards: [ 662.0394303  -107.92821338]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 298 | Rewards: [-54.24763449 -25.23597842]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
 Saved model checkpoints!
-Episode 299 | Rewards: [-78.78149868]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 300 | Rewards: [-31.23378823]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 301 | Rewards: [-62.59893253]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 302 | Rewards: [-65.81506005]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 303 | Rewards: [-64.5048349]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 304 | Rewards: [-61.40149132]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 305 | Rewards: [-73.14830913]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 306 | Rewards: [-99.8912715]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 307 | Rewards: [-77.83333005]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 308 | Rewards: [-40.09397615]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 309 | Rewards: [-101.95127654]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 310 | Rewards: [-82.25673593]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 311 | Rewards: [-33.98508559]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 312 | Rewards: [-71.87152193]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 313 | Rewards: [-75.763715]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 314 | Rewards: [-76.70558372]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 315 | Rewards: [-67.15009895]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 316 | Rewards: [-58.71327657]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 317 | Rewards: [-94.74678542]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 318 | Rewards: [-54.14945281]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 299 | Rewards: [694.03912422  -8.96559041]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 300 | Rewards: [-28.5794368  -28.86668109]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'collision', 'global': 'partial success'}
+Episode 301 | Rewards: [719.98470849 -55.21423089]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 302 | Rewards: [-104.12001385  -94.67277267]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 303 | Rewards: [690.67221416 -50.22969914]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 304 | Rewards: [ 650.8435445  -111.70084957]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 305 | Rewards: [687.51692979 -59.46747586]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 306 | Rewards: [675.34973924 -40.86963241]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 307 | Rewards: [688.28803608 -33.25799094]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 308 | Rewards: [-53.84616774 -56.65629112]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 309 | Rewards: [691.19097304  -1.58424645]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 310 | Rewards: [693.48895827 -26.39924648]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 311 | Rewards: [664.88042598 -61.416002  ]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 312 | Rewards: [658.02965253 -33.63943165]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 313 | Rewards: [630.20739833 -29.14231515]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 314 | Rewards: [660.88583558 -30.21796333]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 315 | Rewards: [694.21594071 -27.77376649]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 316 | Rewards: [691.06819551 -30.11659022]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 317 | Rewards: [691.42172622 -33.09961251]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 318 | Rewards: [688.3690932  -33.44398725]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
 Saved model checkpoints!
-Episode 319 | Rewards: [-61.50880512]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 320 | Rewards: [-69.60161083]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 321 | Rewards: [-63.51536947]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 322 | Rewards: [-64.58205681]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 323 | Rewards: [-80.66181007]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 324 | Rewards: [-67.81188153]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 325 | Rewards: [-46.50070393]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 326 | Rewards: [-90.79569268]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 327 | Rewards: [-98.16465455]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 328 | Rewards: [-64.66966137]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 329 | Rewards: [-50.07951785]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 330 | Rewards: [-81.37433505]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 331 | Rewards: [-57.78609976]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 332 | Rewards: [-66.22303042]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 333 | Rewards: [-90.68907585]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 334 | Rewards: [-77.70598535]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 335 | Rewards: [-63.63692075]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 336 | Rewards: [-74.18052494]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 337 | Rewards: [-75.16509467]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 338 | Rewards: [-100.98588123]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 319 | Rewards: [683.9394566  -36.99469812]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 320 | Rewards: [-27.98027275 -29.00331625]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 321 | Rewards: [-22.72029342 -23.45401715]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 322 | Rewards: [722.24075999   2.41486725]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 323 | Rewards: [628.13206835 -32.1161989 ]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 324 | Rewards: [ -3.88934898 -25.86923604]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 325 | Rewards: [-436.1686351   -62.74253402]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 326 | Rewards: [692.09026397 -25.93915374]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 327 | Rewards: [662.67892855 -61.39302716]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 328 | Rewards: [662.29308317 -31.68267605]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 329 | Rewards: [693.27502844 -59.91293033]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 330 | Rewards: [663.33077013 -27.70606999]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 331 | Rewards: [692.63027329 -30.27486389]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 332 | Rewards: [692.82474865 -25.47120755]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 333 | Rewards: [519.90793096 -51.69950337]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 334 | Rewards: [665.72106827 -58.13803353]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 335 | Rewards: [693.51076862 -27.0141168 ]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 336 | Rewards: [-408.92834893  -64.17730556]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 337 | Rewards: [664.6570069  -29.73094825]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 338 | Rewards: [629.12004586 -34.06435192]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
 Saved model checkpoints!
-Episode 339 | Rewards: [-125.73319354]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 340 | Rewards: [-77.16133364]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 341 | Rewards: [-41.65148911]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 342 | Rewards: [-29.93383169]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 343 | Rewards: [-103.04237804]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 344 | Rewards: [-58.49156323]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 345 | Rewards: [-83.8662016]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 346 | Rewards: [-59.23106215]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 347 | Rewards: [-84.66817441]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 348 | Rewards: [-151.17988866]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 349 | Rewards: [-75.90760533]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 350 | Rewards: [-81.27141216]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 351 | Rewards: [-31.82098761]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 352 | Rewards: [-61.3402464]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 353 | Rewards: [-56.65955537]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 354 | Rewards: [-75.45474628]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 355 | Rewards: [-59.08683002]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 356 | Rewards: [-68.85699605]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 357 | Rewards: [-70.51497007]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 358 | Rewards: [-78.9793332]
-Episode terminated because: {'Drone1': 'collision'}
+Episode 339 | Rewards: [690.49654589 -30.29657118]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 340 | Rewards: [-56.38828052 -57.34545273]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 341 | Rewards: [-28.12058483 -27.82645918]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 342 | Rewards: [-264.21779074  -37.87679574]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 343 | Rewards: [-29.44439328 -59.42845645]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 344 | Rewards: [725.15019993   2.27196336]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 345 | Rewards: [589.81440531 -38.1516119 ]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 346 | Rewards: [685.25918096 -36.81152636]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 347 | Rewards: [-28.6940991  -29.81201559]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 348 | Rewards: [-23.79573138 -53.77867477]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 349 | Rewards: [-82.81279259 -30.07658775]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 350 | Rewards: [-50.4038903  -65.54427216]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 351 | Rewards: [ -84.37492167 -366.12141833]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 352 | Rewards: [-27.49120345 -28.15588172]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 353 | Rewards: [ -42.93744066 -302.91223196]
+Episode terminated because:  {'Drone1': 'collision', 'Drone2': 'collision', 'global': 'Collisions'}
+Episode 354 | Rewards: [-56.30663977 -57.25842659]
+Episode terminated because:  {'Drone1': 'goal reached', 'Drone2': 'ongoing', 'global': 'partial success'}
+Episode 355 | Rewards: [717.57501209  -6.67477358]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 356 | Rewards: [-48.85145011 -65.69174608]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 357 | Rewards: [ -47.12207492 -191.43762545]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
+Episode 358 | Rewards: [ -47.31763308 -185.41809382]
+Episode terminated because:  {'Drone1': 'ongoing', 'Drone2': 'ongoing', 'global': 'timeout'}
 Saved model checkpoints!
-Episode 359 | Rewards: [-56.12189548]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 360 | Rewards: [-76.70451054]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 361 | Rewards: [-37.10647119]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 362 | Rewards: [-69.0871009]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 363 | Rewards: [-81.95032917]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 364 | Rewards: [-55.73694013]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 365 | Rewards: [-121.58658497]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 366 | Rewards: [-62.84433966]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 367 | Rewards: [-66.33888986]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 368 | Rewards: [-61.31197438]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 369 | Rewards: [-90.01580879]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 370 | Rewards: [-68.72999936]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 371 | Rewards: [-60.88780666]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 372 | Rewards: [-62.45205273]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 373 | Rewards: [-29.5859724]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 374 | Rewards: [-33.28682499]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 375 | Rewards: [-58.51821841]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 376 | Rewards: [-68.85360407]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 377 | Rewards: [-65.56341168]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 378 | Rewards: [-56.34785355]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 379 | Rewards: [-66.09603308]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 380 | Rewards: [-60.21136924]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 381 | Rewards: [-80.02224536]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 382 | Rewards: [-48.77861209]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 383 | Rewards: [-67.27400815]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 384 | Rewards: [-58.36812434]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 385 | Rewards: [-61.04719139]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 386 | Rewards: [-89.8861946]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 387 | Rewards: [-74.33973784]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 388 | Rewards: [-64.34532501]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 389 | Rewards: [-81.79807691]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 390 | Rewards: [-63.70215827]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 391 | Rewards: [-62.50061707]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 392 | Rewards: [-66.64978874]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 393 | Rewards: [-55.59736711]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 394 | Rewards: [-122.74042027]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 395 | Rewards: [-88.19007145]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 396 | Rewards: [-77.56605152]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 397 | Rewards: [-29.00831639]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 398 | Rewards: [-90.6833602]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 399 | Rewards: [-67.68964915]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 400 | Rewards: [-67.00678707]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 401 | Rewards: [-89.66850135]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 402 | Rewards: [-97.67737038]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 403 | Rewards: [-120.55611346]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 404 | Rewards: [-70.54347103]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 405 | Rewards: [-61.92110742]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 406 | Rewards: [-98.11231951]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 407 | Rewards: [-32.1792219]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 408 | Rewards: [-60.73132438]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 409 | Rewards: [-69.0495021]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 410 | Rewards: [-65.64861611]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 411 | Rewards: [-77.95504199]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 412 | Rewards: [-88.66236461]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 413 | Rewards: [-71.04759378]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 414 | Rewards: [-67.97793622]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 415 | Rewards: [-59.22057916]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 416 | Rewards: [-79.86688486]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 417 | Rewards: [-61.24402393]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 418 | Rewards: [-67.45676186]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 419 | Rewards: [-73.30226631]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 420 | Rewards: [-59.53779644]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 421 | Rewards: [-58.78446816]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 422 | Rewards: [-71.59376152]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 423 | Rewards: [-108.95482638]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 424 | Rewards: [-126.70810844]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 425 | Rewards: [-60.68438782]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 426 | Rewards: [-126.27077405]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 427 | Rewards: [-69.13961913]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 428 | Rewards: [-75.17304403]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 429 | Rewards: [-75.055414]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 430 | Rewards: [-63.66026269]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 431 | Rewards: [-88.43472178]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 432 | Rewards: [-30.37460023]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 433 | Rewards: [-110.2943245]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 434 | Rewards: [-157.23373536]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 435 | Rewards: [-55.13663385]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 436 | Rewards: [-126.14037281]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 437 | Rewards: [-155.60971954]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 438 | Rewards: [-62.1219517]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 439 | Rewards: [-66.31268009]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 440 | Rewards: [-62.01069745]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 441 | Rewards: [-30.34036819]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 442 | Rewards: [-30.11574381]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 443 | Rewards: [-103.47898429]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 444 | Rewards: [-79.40005543]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 445 | Rewards: [-72.25848135]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 446 | Rewards: [-62.29570755]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 447 | Rewards: [-68.05466522]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 448 | Rewards: [-76.55324591]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 449 | Rewards: [-65.77463615]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 450 | Rewards: [-52.69712589]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 451 | Rewards: [-61.51324423]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 452 | Rewards: [-63.61654263]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 453 | Rewards: [-83.76117807]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 454 | Rewards: [-68.64508966]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 455 | Rewards: [-95.63277293]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 456 | Rewards: [-216.64671123]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 457 | Rewards: [-63.04269976]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 458 | Rewards: [-91.50591204]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 459 | Rewards: [-61.18505006]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 460 | Rewards: [-94.20803363]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 461 | Rewards: [-159.99231148]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 462 | Rewards: [-36.54175584]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 463 | Rewards: [-64.83011273]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 464 | Rewards: [-61.48167049]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 465 | Rewards: [-71.33456139]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 466 | Rewards: [-36.95462212]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 467 | Rewards: [-77.06909548]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 468 | Rewards: [-70.82604597]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 469 | Rewards: [-111.74328026]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 470 | Rewards: [-63.46818466]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 471 | Rewards: [-87.35029364]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 472 | Rewards: [-59.31606925]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 473 | Rewards: [-62.26747958]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 474 | Rewards: [-125.0250552]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 475 | Rewards: [-117.8781205]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 476 | Rewards: [-61.98970995]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 477 | Rewards: [-64.73168864]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 478 | Rewards: [-88.7755276]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 479 | Rewards: [-98.99649931]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 480 | Rewards: [-91.56821357]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 481 | Rewards: [-82.05139341]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 482 | Rewards: [-218.13236519]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 483 | Rewards: [-59.32284821]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 484 | Rewards: [-64.84609278]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 485 | Rewards: [-56.41771248]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 486 | Rewards: [-82.22139085]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 487 | Rewards: [-65.73384512]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 488 | Rewards: [-30.1564722]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 489 | Rewards: [-65.15036887]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 490 | Rewards: [-32.60025549]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 491 | Rewards: [-90.8511141]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 492 | Rewards: [-63.75220831]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 493 | Rewards: [-66.73974629]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 494 | Rewards: [-66.89225375]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 495 | Rewards: [-58.72012828]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 496 | Rewards: [-90.45025201]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 497 | Rewards: [-93.02084723]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 498 | Rewards: [-120.96985697]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 499 | Rewards: [-59.02158406]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 500 | Rewards: [-57.5595786]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 501 | Rewards: [-68.28917358]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 502 | Rewards: [-94.33135763]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 503 | Rewards: [-88.46821385]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 504 | Rewards: [-92.9025788]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 505 | Rewards: [-107.10296703]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 506 | Rewards: [-73.16788197]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 507 | Rewards: [-76.51085183]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 508 | Rewards: [-189.94956847]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 509 | Rewards: [-61.58871806]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 510 | Rewards: [-170.79965106]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 511 | Rewards: [-84.95934327]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 512 | Rewards: [-58.07186214]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 513 | Rewards: [-79.21625354]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 514 | Rewards: [-72.76125612]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 515 | Rewards: [-58.97685788]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 516 | Rewards: [-65.24030083]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 517 | Rewards: [-114.56606522]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 518 | Rewards: [-69.41724489]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 519 | Rewards: [-92.12711403]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 520 | Rewards: [-58.31957317]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 521 | Rewards: [-58.70216537]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 522 | Rewards: [-126.02536772]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 523 | Rewards: [-106.19254823]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 524 | Rewards: [-22.72924509]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 525 | Rewards: [-58.31427745]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 526 | Rewards: [-64.1540055]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 527 | Rewards: [-120.45507957]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 528 | Rewards: [-70.01610717]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 529 | Rewards: [-65.96653538]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 530 | Rewards: [-95.55052507]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 531 | Rewards: [-62.96277809]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 532 | Rewards: [-72.45199175]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 533 | Rewards: [-93.74613901]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 534 | Rewards: [-79.34301386]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 535 | Rewards: [-65.54225963]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 536 | Rewards: [-68.68610455]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 537 | Rewards: [-83.08265084]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 538 | Rewards: [-73.45104459]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 539 | Rewards: [-120.58721349]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 540 | Rewards: [-31.11339583]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 541 | Rewards: [-89.36819447]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 542 | Rewards: [-108.68099207]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 543 | Rewards: [-70.01076233]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 544 | Rewards: [-68.86141943]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 545 | Rewards: [-64.50454859]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 546 | Rewards: [-100.69149914]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 547 | Rewards: [-74.52399964]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 548 | Rewards: [-53.65505468]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 549 | Rewards: [-66.16520479]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 550 | Rewards: [-42.76330968]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 551 | Rewards: [-56.05137784]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 552 | Rewards: [-109.94553912]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 553 | Rewards: [-129.17691842]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 554 | Rewards: [-140.50094976]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 555 | Rewards: [-108.9945367]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 556 | Rewards: [-57.13316149]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 557 | Rewards: [-86.39799905]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 558 | Rewards: [-58.61926799]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 559 | Rewards: [-71.08953092]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 560 | Rewards: [-69.07811231]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 561 | Rewards: [-74.54354133]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 562 | Rewards: [-68.20061115]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 563 | Rewards: [-69.39145817]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 564 | Rewards: [-70.04757809]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 565 | Rewards: [-71.00295264]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 566 | Rewards: [-62.77574929]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 567 | Rewards: [-63.92585569]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 568 | Rewards: [-69.82339465]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 569 | Rewards: [-78.1440738]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 570 | Rewards: [-69.01138088]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 571 | Rewards: [-78.78878608]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 572 | Rewards: [-65.02272142]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 573 | Rewards: [-57.47371644]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 574 | Rewards: [-60.27330942]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 575 | Rewards: [-65.19704973]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 576 | Rewards: [-87.08315133]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 577 | Rewards: [-59.2789963]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 578 | Rewards: [-71.05309578]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 579 | Rewards: [-129.62038828]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 580 | Rewards: [-63.93920386]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 581 | Rewards: [-67.94101342]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 582 | Rewards: [-59.77936212]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 583 | Rewards: [-66.34396681]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 584 | Rewards: [-68.87091258]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 585 | Rewards: [-64.78278384]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 586 | Rewards: [-93.26562402]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 587 | Rewards: [-65.77508871]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 588 | Rewards: [-79.2760288]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 589 | Rewards: [-58.07028221]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 590 | Rewards: [-170.92961387]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 591 | Rewards: [-64.6820093]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 592 | Rewards: [-67.62222119]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 593 | Rewards: [-38.66718388]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 594 | Rewards: [-60.54255127]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 595 | Rewards: [-151.59957805]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 596 | Rewards: [-39.36739387]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 597 | Rewards: [-61.4007282]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 598 | Rewards: [-43.55131091]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 599 | Rewards: [-48.70216966]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 600 | Rewards: [-59.98044451]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 601 | Rewards: [-66.1089118]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 602 | Rewards: [-110.94450028]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 603 | Rewards: [-94.26721907]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 604 | Rewards: [-155.94791615]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 605 | Rewards: [-31.40453625]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 606 | Rewards: [-161.69218263]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 607 | Rewards: [-260.3523476]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 608 | Rewards: [-62.10687642]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 609 | Rewards: [-64.59998011]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 610 | Rewards: [-59.73773481]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 611 | Rewards: [-57.51984716]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 612 | Rewards: [-47.08260455]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 613 | Rewards: [-92.62897741]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 614 | Rewards: [-64.15404889]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 615 | Rewards: [-65.43364974]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 616 | Rewards: [-61.60481418]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 617 | Rewards: [-45.0474283]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 618 | Rewards: [-80.40120129]
-Episode terminated because: {'Drone1': 'timeout'}
-Saved model checkpoints!
-Episode 619 | Rewards: [-101.81710841]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 620 | Rewards: [-60.91819725]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 621 | Rewards: [-46.48282628]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 622 | Rewards: [-90.57293892]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 623 | Rewards: [-73.38203842]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 624 | Rewards: [-67.73740007]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 625 | Rewards: [-60.86590538]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 626 | Rewards: [-73.41311389]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 627 | Rewards: [-86.3688513]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 628 | Rewards: [-64.60282949]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 629 | Rewards: [-64.853622]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 630 | Rewards: [-59.14636369]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 631 | Rewards: [-55.45578481]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 632 | Rewards: [-56.92943907]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 633 | Rewards: [-63.34027073]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 634 | Rewards: [-133.26118888]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 635 | Rewards: [-61.75835926]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 636 | Rewards: [-90.19101328]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 637 | Rewards: [-61.3395082]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 638 | Rewards: [-69.17281719]
-Episode terminated because: {'Drone1': 'timeout'}
-Saved model checkpoints!
-Episode 639 | Rewards: [-86.2716946]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 640 | Rewards: [-48.66715803]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 641 | Rewards: [-88.33553717]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 642 | Rewards: [-70.13240261]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 643 | Rewards: [-77.01397115]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 644 | Rewards: [-63.23919767]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 645 | Rewards: [-64.21446223]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 646 | Rewards: [-65.640417]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 647 | Rewards: [-56.78864293]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 648 | Rewards: [-76.77618791]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 649 | Rewards: [-53.13038658]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 650 | Rewards: [-49.74327278]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 651 | Rewards: [-55.99294995]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 652 | Rewards: [-95.54315777]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 653 | Rewards: [-59.05994139]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 654 | Rewards: [-129.2654049]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 655 | Rewards: [-19.859539]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 656 | Rewards: [-58.81135177]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 657 | Rewards: [-58.57117215]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 658 | Rewards: [-57.33843001]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 659 | Rewards: [-26.76859583]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 660 | Rewards: [-98.0423526]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 661 | Rewards: [-54.23120947]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 662 | Rewards: [-49.39017347]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 663 | Rewards: [-59.84764322]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 664 | Rewards: [-62.77848977]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 665 | Rewards: [-143.87535144]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 666 | Rewards: [-122.02780363]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 667 | Rewards: [-61.03754311]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 668 | Rewards: [-123.14775296]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 669 | Rewards: [-66.60639443]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 670 | Rewards: [-56.32319206]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 671 | Rewards: [-54.72944381]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 672 | Rewards: [-113.98338918]
-Episode terminated because: {'Drone1': 'timeout'}
-Episode 673 | Rewards: [-65.63831517]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 674 | Rewards: [-79.49041678]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 675 | Rewards: [-57.84985266]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 676 | Rewards: [-64.13029657]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 677 | Rewards: [-59.23662019]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 678 | Rewards: [-76.22393837]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 679 | Rewards: [-82.82749968]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 680 | Rewards: [-60.5435659]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 681 | Rewards: [-59.33160962]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 682 | Rewards: [-50.39055066]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 683 | Rewards: [-102.71697537]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 684 | Rewards: [-55.32060806]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 685 | Rewards: [-45.31347858]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 686 | Rewards: [-46.3029618]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 687 | Rewards: [-41.44384783]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 688 | Rewards: [-52.97444422]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 689 | Rewards: [-61.7039411]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 690 | Rewards: [-83.51579381]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 691 | Rewards: [-50.28192798]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 692 | Rewards: [-49.5268591]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 693 | Rewards: [-44.51611283]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 694 | Rewards: [-49.57329347]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 695 | Rewards: [-54.70583332]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 696 | Rewards: [-46.59317592]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 697 | Rewards: [-10.73945449]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 698 | Rewards: [-116.33045192]
-Episode terminated because: {'Drone1': 'goal reached'}
-Saved model checkpoints!
-Episode 699 | Rewards: [700.3615067]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 700 | Rewards: [-15.24879852]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 701 | Rewards: [-47.47078046]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 702 | Rewards: [-78.45564686]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 703 | Rewards: [695.68822474]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 704 | Rewards: [-142.92721149]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 705 | Rewards: [-431.74029083]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 706 | Rewards: [-152.29500048]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 707 | Rewards: [-210.36600528]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 708 | Rewards: [-19.44311063]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 709 | Rewards: [-12.32518396]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 710 | Rewards: [-53.27039697]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 711 | Rewards: [-39.02872742]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 712 | Rewards: [-58.07760633]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 713 | Rewards: [-71.76953445]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 714 | Rewards: [-109.52032011]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 715 | Rewards: [-45.57737819]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 716 | Rewards: [-48.17221433]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 717 | Rewards: [-52.0807393]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 718 | Rewards: [-441.37056058]
-Episode terminated because: {'Drone1': 'goal reached'}
-Saved model checkpoints!
-Episode 719 | Rewards: [-4.7872071]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 720 | Rewards: [-671.16467826]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 721 | Rewards: [-706.00505496]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 722 | Rewards: [-44.47351787]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 723 | Rewards: [-21.80897734]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 724 | Rewards: [-176.00235049]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 725 | Rewards: [-40.63663421]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 726 | Rewards: [-47.10081109]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 727 | Rewards: [-40.52258176]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 728 | Rewards: [622.49086747]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 729 | Rewards: [-45.0743332]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 730 | Rewards: [-49.60721386]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 731 | Rewards: [690.53353384]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 732 | Rewards: [-41.27191561]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 733 | Rewards: [-19.78996089]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 734 | Rewards: [-47.53498287]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 735 | Rewards: [-46.2724352]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 736 | Rewards: [-36.81752373]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 737 | Rewards: [-201.12078069]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 738 | Rewards: [-69.60953293]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 739 | Rewards: [-50.51700073]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 740 | Rewards: [-39.56673665]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 741 | Rewards: [-73.81765292]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 742 | Rewards: [-265.32504478]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 743 | Rewards: [-104.4853952]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 744 | Rewards: [-41.29761417]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 745 | Rewards: [-40.82324576]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 746 | Rewards: [-73.96862317]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 747 | Rewards: [-37.76955189]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 748 | Rewards: [-178.90335703]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 749 | Rewards: [-47.89549939]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 750 | Rewards: [-51.60320644]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 751 | Rewards: [-129.84760718]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 752 | Rewards: [-13.85743887]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 753 | Rewards: [-111.41890969]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 754 | Rewards: [-56.33100403]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 755 | Rewards: [-40.88141153]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 756 | Rewards: [-43.72756954]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 757 | Rewards: [-75.28187865]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 758 | Rewards: [-104.25334103]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 759 | Rewards: [-84.85701714]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 760 | Rewards: [-43.82151467]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 761 | Rewards: [-47.77704157]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 762 | Rewards: [-42.87370756]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 763 | Rewards: [-67.37722147]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 764 | Rewards: [-42.62676248]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 765 | Rewards: [-64.70842865]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 766 | Rewards: [-169.45106411]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 767 | Rewards: [-72.60613069]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 768 | Rewards: [-5.47007093]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 769 | Rewards: [-131.64461975]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 770 | Rewards: [-280.44819832]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 771 | Rewards: [-20.23417947]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 772 | Rewards: [-43.40193747]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 773 | Rewards: [-80.84305538]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 774 | Rewards: [-43.45420306]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 775 | Rewards: [-38.35191918]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 776 | Rewards: [-233.2096644]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 777 | Rewards: [-42.80456118]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 778 | Rewards: [-11.52186122]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 779 | Rewards: [-74.3125297]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 780 | Rewards: [-258.60907764]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 781 | Rewards: [-68.1216278]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 782 | Rewards: [-74.31563715]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 783 | Rewards: [-44.17124599]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 784 | Rewards: [-54.1462931]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 785 | Rewards: [-120.80186422]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 786 | Rewards: [-7.59083986]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 787 | Rewards: [-91.21953594]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 788 | Rewards: [697.03239168]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 789 | Rewards: [-135.32842564]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 790 | Rewards: [-80.91283926]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 791 | Rewards: [-135.25627965]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 792 | Rewards: [-19.95085732]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 793 | Rewards: [-33.24790234]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 794 | Rewards: [-65.1255533]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 795 | Rewards: [-80.64140715]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 796 | Rewards: [-12.61882337]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 797 | Rewards: [-73.95325734]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 798 | Rewards: [-53.7335006]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 799 | Rewards: [-68.84412744]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 800 | Rewards: [-42.22174411]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 801 | Rewards: [-74.76207019]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 802 | Rewards: [-47.68428208]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 803 | Rewards: [-72.09986876]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 804 | Rewards: [693.22935944]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 805 | Rewards: [-39.73204825]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 806 | Rewards: [-80.93894449]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 807 | Rewards: [-43.29359656]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 808 | Rewards: [-80.8535552]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 809 | Rewards: [-40.1272201]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 810 | Rewards: [-83.49279261]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 811 | Rewards: [-111.70761677]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 812 | Rewards: [-68.42468598]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 813 | Rewards: [-45.03156805]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 814 | Rewards: [-53.97292817]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 815 | Rewards: [-48.92253167]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 816 | Rewards: [-36.66376123]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 817 | Rewards: [693.84518195]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 818 | Rewards: [-143.49245695]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 819 | Rewards: [-51.55721601]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 820 | Rewards: [-14.92809944]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 821 | Rewards: [-42.05969591]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 822 | Rewards: [-36.13059082]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 823 | Rewards: [-50.36203963]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 824 | Rewards: [-101.85350507]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 825 | Rewards: [-94.00454148]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 826 | Rewards: [-45.18593258]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 827 | Rewards: [-43.1519295]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 828 | Rewards: [-28.00478969]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 829 | Rewards: [-108.44663264]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 830 | Rewards: [-137.55325972]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 831 | Rewards: [-46.22797952]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 832 | Rewards: [695.3654369]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 833 | Rewards: [-52.34635043]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 834 | Rewards: [-101.98733423]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 835 | Rewards: [-50.32477445]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 836 | Rewards: [-161.02576087]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 837 | Rewards: [-138.70986562]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 838 | Rewards: [-45.99113933]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 839 | Rewards: [-37.20456836]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 840 | Rewards: [-47.96974842]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 841 | Rewards: [-40.07239078]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 842 | Rewards: [-47.3675256]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 843 | Rewards: [-183.54555209]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 844 | Rewards: [-102.3712931]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 845 | Rewards: [-114.50761801]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 846 | Rewards: [701.36091669]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 847 | Rewards: [-43.0994335]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 848 | Rewards: [-68.30509642]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 849 | Rewards: [-41.37940695]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 850 | Rewards: [-77.0927087]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 851 | Rewards: [-46.74630634]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 852 | Rewards: [-231.07133462]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 853 | Rewards: [-37.00820113]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 854 | Rewards: [-46.0538437]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 855 | Rewards: [-154.24794781]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 856 | Rewards: [-38.47655387]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 857 | Rewards: [-78.25022916]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 858 | Rewards: [-46.46224728]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 859 | Rewards: [-53.74426466]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 860 | Rewards: [-258.90245324]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 861 | Rewards: [-37.15777397]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 862 | Rewards: [-43.66014155]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 863 | Rewards: [-112.14580342]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 864 | Rewards: [-9.0264363]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 865 | Rewards: [-38.81704236]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 866 | Rewards: [-46.19647695]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 867 | Rewards: [-114.19023196]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 868 | Rewards: [-136.09956878]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 869 | Rewards: [-39.43125984]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 870 | Rewards: [-122.40851036]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 871 | Rewards: [-108.35122128]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 872 | Rewards: [-46.34021692]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 873 | Rewards: [-18.18461826]
-Episode terminated because: {'Drone1': 'goal reached'}
-Episode 874 | Rewards: [-1.76294714]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 875 | Rewards: [-314.8243733]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 876 | Rewards: [-45.20016616]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 877 | Rewards: [-70.61623706]
-Episode terminated because: {'Drone1': 'collision'}
-Episode 878 | Rewards: [-43.18774574]
-Episode terminated because: {'Drone1': 'collision'}
-Saved model checkpoints!
-Episode 879 | Rewards: [-41.11538093]
+Episode 359 | Rewards: [-49.04417406 -68.84866771]

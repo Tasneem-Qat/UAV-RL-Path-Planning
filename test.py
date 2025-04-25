@@ -44,5 +44,5 @@ def test_trained_agents(agent_paths):
 
 if __name__ == "__main__":
     # Provide a list of saved models for each agent
-    model_paths = ["agent0_actor_ep9.pth"]
+    model_paths = ["agent0_actor_ep1499.pth"]
     test_trained_agents(model_paths)
