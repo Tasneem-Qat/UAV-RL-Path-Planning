@@ -5,7 +5,7 @@ import numpy as np
 
 from networks import Actor, Critic
 from config import (DEVICE, GAMMA, TAU, ACTOR_LR, CRITIC_LR, 
-                    NUM_AGENTS, STATE_DIM, ACTION_DIM, GRAD_CLIP, INIT_ENTROPY_COEFF, ENTROPY_DECAY)
+                    NUM_AGENTS, STATE_DIM, ACTION_DIM, GRAD_CLIP)
 
 class MADDPGAgent:
     def __init__(self, agent_index):
@@ -13,7 +13,7 @@ class MADDPGAgent:
         Each agent has:
         - index so that it can be individually tracked and updated
         - local actor
-        - local critic (ours is centralized so it might see all states+actions)
+        - local critic (ours is centralized so it sees all states+actions)
         - target actor
         - target critic
         - optimizers
@@ -48,14 +48,14 @@ class MADDPGAgent:
         action += noise * np.random.randn(*action.shape)
         return action
 
-    def update(self, obs, actions, rewards, next_obs, dones, all_agents, episode_num):
+    def update(self, obs, actions, rewards, next_obs, dones, all_agents, is_weights, episode_num):
         """
         takes a batch of transitions for all agents and a list of all agent objects to correctly compute target actions
         obs: shape [batch_size, num_agents, state_dim]
         actions: shape [batch_size, num_agents, action_dim]
         rewards: shape [batch_size, num_agents]
         next_obs: shape [batch_size, num_agents, state_dim]
-        dones: shape [batch_size, num_agents] (if you track done per agent)
+        dones: shape [batch_size, num_agents]
         all_agents: list of all agent objects (for target actions, etc.)
         """
         #Converts to torch tensors
@@ -64,7 +64,8 @@ class MADDPGAgent:
         rewards_t = torch.FloatTensor(rewards[:, self.agent_index]).unsqueeze(1).to(DEVICE)
         next_obs_t = torch.FloatTensor(next_obs).to(DEVICE)
         dones_t = torch.FloatTensor(dones[:, 0]).unsqueeze(1).to(DEVICE)
-
+        is_weights_t = is_weights.to(DEVICE)
+        
         # —————— Critic Update ——————
         #Builds centralized input for critic and flattens all states and all actions
         full_obs = obs_t.view(obs_t.size(0), -1)
@@ -86,9 +87,15 @@ class MADDPGAgent:
             target_q = rewards_t + GAMMA * (1 - dones_t) * target_q_next
         
         critic_input = torch.cat((full_obs, full_actions), dim=1)
-        q_value = self.critic(critic_input)
+        # q_value = self.critic(critic_input)
         
-        critic_loss = torch.mean((q_value - target_q) ** 2)
+        # critic_loss = torch.mean((q_value - target_q) ** 2)
+        
+        q_value = self.critic(critic_input)
+        critic_loss = torch.mean((q_value - target_q) ** 2 * is_weights_t)
+
+        # Compute TD errors for each sample
+        td_errors = (q_value - target_q).detach().abs().squeeze().cpu().numpy()
         
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
@@ -149,7 +156,7 @@ class MADDPGAgent:
         self._soft_update(self.target_critic, self.critic, TAU)
         
         
-        return critic_loss.item(), actor_loss.item()
+        return critic_loss.item(), actor_loss.item(), td_errors
 
     def _soft_update(self, target, source, tau):
         """

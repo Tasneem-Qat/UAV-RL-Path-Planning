@@ -32,17 +32,18 @@ def test_trained_agents(agent_paths):
                 actions.append(action)
             
             actions = np.array(actions)
-            next_obs, rewards, done, info = env.step(actions)
+            next_obs, rewards, dones, info = env.step(actions)
             
             obs = next_obs
             episode_reward += rewards
             
-            if done:
+            if dones[0]:
+                print("Episode terminated because: ", info)
                 break
         
         print(f"[TEST] Episode {ep} - Rewards: {episode_reward}")
 
 if __name__ == "__main__":
     # Provide a list of saved models for each agent
-    model_paths = ["agent0_actor_ep1499.pth"]
+    model_paths = ["weights/agent0_actor_ep1500.pth", "weights/agent1_actor_ep2000.pth"]
     test_trained_agents(model_paths)

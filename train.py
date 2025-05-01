@@ -6,8 +6,8 @@ import csv
 
 from airsim_env import AirSimMultiAgentEnv
 from maddpg_agent import MADDPGAgent
-from replay_buffer import ReplayBuffer
-from config import (MAX_EPISODES, MAX_STEPS, BATCH_SIZE, UPDATE_FREQUENCY, 
+from replay_buffer import PrioritizedReplayBuffer, ReplayBuffer
+from config import (DEVICE, MAX_EPISODES, MAX_STEPS, BATCH_SIZE, REPLAY_BUFFER_SIZE, UPDATE_FREQUENCY, 
                     NUM_AGENTS, SEED)
 
 def main():
@@ -23,7 +23,7 @@ def main():
     agents = [MADDPGAgent(i) for i in range(NUM_AGENTS)]
     
     #Creates replay buffer
-    memory = ReplayBuffer()
+    memory = PrioritizedReplayBuffer(buffer_size=REPLAY_BUFFER_SIZE)
 
     episode_critic_loss = [0.0] * NUM_AGENTS
     episode_actor_loss = [0.0] * NUM_AGENTS
@@ -58,7 +58,7 @@ def main():
             actions = []
             for i, agent in enumerate(agents):
                 # adding some noise for exploration
-                noise = max(0.1, (1 - ep / MAX_EPISODES))
+                noise = max(0.1, (1 - ep / (MAX_EPISODES*0.5)))
                 action = agent.act(obs[i], noise=noise)
                 actions.append(action)
             actions = np.array(actions)
@@ -83,17 +83,35 @@ def main():
             
             #Learns every [UPDATE_FREQUENCY] steps
             if len(memory) > BATCH_SIZE and step % UPDATE_FREQUENCY == 0:
-                for agent_i, agent in enumerate(agents):
-                    # Sample and update
-                    b_obs, b_actions, b_rewards, b_next_obs, b_dones = memory.sample(BATCH_SIZE)
+                # 1. Sample ONCE per update step
+                indices, batch, is_weights = memory.sample(BATCH_SIZE)
+                obs_batch, actions_batch, rewards_batch, next_obs_batch, dones_batch = zip(*batch)
+                obs_batch = np.array(obs_batch)
+                actions_batch = np.array(actions_batch)
+                rewards_batch = np.array(rewards_batch)
+                next_obs_batch = np.array(next_obs_batch)
+                dones_batch = np.array(dones_batch)
+                is_weights_tensor = torch.FloatTensor(is_weights).to(DEVICE).unsqueeze(1)
+                
+                all_td_errors = []
+                
+                # 2. Update ALL agents with the SAME batch
+                for agent_i, agent in enumerate(agents):  # Single loop
+                    critic_loss, actor_loss, td_errors = agent.update(
+                        obs_batch, actions_batch, rewards_batch, 
+                        next_obs_batch, dones_batch, agents, 
+                        is_weights_tensor, ep
+                    )
+                    all_td_errors.append(td_errors)
                     
-                    # Modified to receive gradient norms from agent.update()
-                    (critic_loss, actor_loss) = agent.update(b_obs, b_actions, b_rewards, b_next_obs, b_dones, agents, episode_num=ep)
-                    
-                    # Track per-agent metrics
+                    # 3. Track losses PER AGENT
                     episode_critic_loss[agent_i] += critic_loss
                     episode_actor_loss[agent_i] += actor_loss
                     num_updates_per_agent[agent_i] += 1
+                
+                # 4. Update priorities once per batch
+                max_td_errors = np.max(all_td_errors, axis=0)
+                memory.update_priorities(indices, max_td_errors)
             
 
         # Inside the training loop (train.py), after each episode:
@@ -103,7 +121,7 @@ def main():
             for i, agent in enumerate(agents):
                 torch.save(
                     agent.actor.state_dict(), 
-                    f"weights/agent{i}_actor_ep{ep}.pth"  # Save to weights/
+                    f"weights/agent{i}_actor_ep{ep+1}.pth"  # Save to weights/
                 )
             print("Saved model checkpoints!") 
                
