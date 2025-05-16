@@ -1,64 +1,37 @@
 import torch
 
-#Random number generator seed used for torch and numpy in train.py to reproduce issues
+# Random number generator seed
 SEED = 123
 
-#Selects GPU if available for better performace
+# Device selection
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#_______________________________________________________________________________________
 
-#Environment Parameters:
-
-#Number of drone agents present
-NUM_AGENTS = 2
-
-#Specifies the state dimensions for each drone, 9 values: # 6 (pos + vel) + 3 (rel_goal) + 4 (sensors)
+# Environment Parameters
+NUM_AGENTS = 1  # Single agent
 STATE_DIM = 13
+ACTION_DIM = 3
 
-#Number of actions that the drone can take. 3 values: velocity in three directions
-ACTION_DIM = 3 
-#_______________________________________________________________________________________
-
-#Training Settings:
-
-#Episodes of training (like epochs)
+# Training Settings
 MAX_EPISODES = 2000
-
-#Max steps in each episode
 MAX_STEPS = 120
-
-#Discount factor: determines how much the RL agent cares about distant future rewards relative to those in the immediate future        
 GAMMA = 0.95
-
-#Soft update rate: prevents sudden shifts in learned Q-values, for more reliable and steady learning
-TAU = 0.01
-
-#Learning rate for actor
-ACTOR_LR =  0.0001
-
-#Learning rate for critic
-CRITIC_LR =  0.0001
-
-#Gradient clipping
+ACTOR_LR = 0.0001
+CRITIC_LR = 0.0005
 GRAD_CLIP = 1.0
-
-#Training batch size
 BATCH_SIZE = 64
 
-#How often to do a training step
-UPDATE_FREQUENCY = 20
+# PPO-specific parameters
+CLIP_EPSILON = 0.1
+GAE_LAMBDA = 0.95
 
-#Buffer which stores experience in replay_buffer.py
-REPLAY_BUFFER_SIZE = int(1e4)
-#_______________________________________________________________________________________
+INITIAL_ENTROPY_COEF = 0.01     # Starting value
+MIN_ENTROPY_COEF = 0.003        # Minimum value
+ENTROPY_DECAY_RATE = 0.002      # Controls decay speed (higher = faster decay)
 
-#Neural Network Settings:
+PPO_EPOCHS = 4
+NUM_STEPS = 2048       # Steps per policy update
+MINIBATCH_SIZE = 64
+ADV_GAMMA = 0.99
 
-#Hidden layer dimension for the nerual networks in networks.py
-HIDDEN_DIM = 128        
-
-#Priority Experience Replay Parameters
-PER_ALPHA = 0.6  # Priority exponent
-PER_BETA = 0.4    # Initial importance sampling exponent
-PER_BETA_INCREMENT = 0.001
-PER_EPSILON = 1e-6
+# Neural Network
+HIDDEN_DIM = 128

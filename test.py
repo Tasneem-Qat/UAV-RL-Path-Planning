@@ -1,49 +1,63 @@
+import csv
 import numpy as np
 import torch
-from airsim_env import AirSimMultiAgentEnv
-from maddpg_agent import MADDPGAgent
-from config import NUM_AGENTS, MAX_STEPS
+import os
+from airsim_env import AirSimEnv
+from ppo_agent import PPOAgent
+from networks import ActorCritic
+from config import STATE_DIM, ACTION_DIM, DEVICE, MAX_STEPS
 
-def test_trained_agents(agent_paths):
-    """
-    agent_paths: list of file paths to the saved agent models 
-                 e.g. ['agent0_actor.pth', 'agent1_actor.pth', ...]
-    """
-    # Create environment
-    env = AirSimMultiAgentEnv()
+def test_trained_agent(model_path):
+    # Initialize environment and agent
+    env = AirSimEnv()
+    policy = ActorCritic(STATE_DIM, ACTION_DIM).to(DEVICE)
+    # Load checkpoint and extract policy weights
+    checkpoint = torch.load(model_path)
+    policy.load_state_dict(checkpoint["policy"])
+    policy.eval()
 
-    # Create Agents
-    agents = [MADDPGAgent(i) for i in range(NUM_AGENTS)]
-    
-    # Load actor weights
-    for i, path in enumerate(agent_paths):
-        agents[i].actor.load_state_dict(torch.load(path))
-        agents[i].actor.eval()
-    
-    # Evaluate
-    for ep in range(10):  # e.g. 10 test episodes
-        obs = env.reset()
-        episode_reward = np.zeros(NUM_AGENTS)
+    step_counter = 0
+
+    # Testing metrics storage
+    os.makedirs("test_results", exist_ok=True)
+    with open("test_results/testing_log.csv", "w", newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["Episode", "Total Reward",
+                         "Collision Count", "Completion Time", "Termination State",
+                         "Step Count", "Distance To Goal"
+                         ])
+        
+    # Run 10 test episodes
+    for ep in range(50):
+        state = env.reset()
+        episode_reward = 0
+        done = False
         
         for step in range(MAX_STEPS):
-            actions = []
-            for i, agent in enumerate(agents):
-                action = agent.act(obs[i], noise=0.0)  # no noise for testing
-                actions.append(action)
-            
-            actions = np.array(actions)
-            next_obs, rewards, dones, info = env.step(actions)
-            
-            obs = next_obs
-            episode_reward += rewards
-            
-            if dones[0]:
-                print("Episode terminated because: ", info)
+            step_counter += 1
+            with torch.no_grad():
+                state_tensor = torch.FloatTensor(state).to(DEVICE)
+                mean, std, _ = policy(state_tensor)
+                dist = torch.distributions.Normal(mean, std)
+                action = dist.sample().cpu().numpy()
+
+            next_state, reward, done, details = env.step(action)
+            episode_reward += reward
+            state = next_state
+
+            if done:
                 break
         
-        print(f"[TEST] Episode {ep} - Rewards: {episode_reward}")
+        with open("test_results/testing_log.csv", "a", newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([ep, episode_reward,
+                             env.collision_counter,
+                             f"{env.completion_time:.2f}" if env.completion_time else "N/A",
+                             details, step_counter, env.dist_to_goal
+                             ])
+            
+        print(f"Test Episode {ep+1} | Total Reward: {episode_reward:.2f}")
 
 if __name__ == "__main__":
-    # Provide a list of saved models for each agent
-    model_paths = ["weights/agent0_actor_ep1500.pth", "weights/agent1_actor_ep2000.pth"]
-    test_trained_agents(model_paths)
+    # Load your best saved model
+    test_trained_agent("weights/ppo_agent_ep680.pth")
