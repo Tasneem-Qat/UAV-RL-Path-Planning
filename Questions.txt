@@ -1,5 +1,0 @@
-Questions:
-1. what does this line do in airsim_env.py's reward calc function? goal_pos = self.goal_positions.get(name, np.array([0.0, 0.0, -5.0]))
-2. why target and local/online actor and critic networks? what is the difference?
-3. how to know how to construct the actor and critic networks? how many hidden layers, type of layers, optimizers, etc?
-4. why are critic_loss, actor_loss in the train.py line critic_loss, actor_loss = agent.update(b_obs, b_actions, b_rewards, b_next_obs, b_dones, agents) greyed out?
